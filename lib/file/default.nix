@@ -81,6 +81,12 @@ in
       _name: { system, ... }: hasPrefix "aarch64-darwin" system || hasPrefix "x86_64-darwin" system
     ) systems;
 
+  filterNixOSSystems =
+    systems:
+    filterAttrs (
+      _name: { system, ... }: hasPrefix "x86_64-linux" system || hasPrefix "aarch64-linux" system
+    ) systems;
+
   parseHomeConfigurations =
     homesPath:
     let

@@ -60,5 +60,6 @@ in
     ;
 
   darwinModules = fileLib.importModulesRecursive ../../modules/darwin;
+  nixosModules = fileLib.importModulesRecursive ../../modules/nixos;
   homeModules = fileLib.importModulesRecursive ../../modules/home;
 }

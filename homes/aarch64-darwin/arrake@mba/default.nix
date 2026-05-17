@@ -12,10 +12,13 @@ in
       fullName = "arrake";
     };
 
-    roles.developer = enabled;
+    programs = {
+      legacyMinimal = enabled;
+      terminal.shell.zsh.enable = false;
+    };
   };
 
   home = {
-    stateVersion = "25.11";
+    stateVersion = "25.05";
   };
 }

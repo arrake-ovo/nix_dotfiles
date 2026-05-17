@@ -36,6 +36,7 @@ inputs.nix-darwin.lib.darwinSystem {
       }
 
       inputs.home-manager.darwinModules.home-manager
+      inputs.nix-homebrew.darwinModules.nix-homebrew
 
       {
         home-manager = {

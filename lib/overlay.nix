@@ -6,7 +6,8 @@ let
   moduleLib = import ./module { inherit inputs; };
 in
 {
-  arrakenix = moduleLib;
+  dot = moduleLib;
+  arrakenix = moduleLib; # deprecated, use dot
 
   file = fileLib;
 

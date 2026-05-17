@@ -68,9 +68,9 @@ lib.mkIf condition { };
 with lib; { ... }
 ```
 
-## 1.3 配置层级（7 层）
+## 1.3 配置层级（5 层）
 
-配置架构将代码组织在七个抽象级别中：
+配置架构将代码组织在五个抽象级别中，从通用到具体：
 
 **第 1 层：Flake 入口** (`flake.nix`)
 
@@ -83,27 +83,19 @@ with lib; { ... }
 - 系统构建器（mkSystem、mkDarwin、mkHome）
 - 文件工具和模块发现函数
 
-**第 3 层：通用模块** (`modules/common/`)
+**第 3 层：系统模块** (`modules/common/`、`modules/nixos/`、`modules/darwin/`)
 
-- 跨平台系统级模块
-- NixOS 和 Darwin 配置共享的逻辑
+- 跨平台和平台特定的系统级配置
+- NixOS：硬件、启动、服务、安全
+- Darwin：nix-darwin 集成、Homebrew、macOS 系统设置
 
-**第 4 层：平台模块** (`modules/nixos/`、`modules/darwin/`)
+**第 4 层：用户模块与组合** (`modules/home/`、`modules/*/suites/`、`modules/*/archetypes/`)
 
-- NixOS 特定的系统配置（硬件、启动、服务、安全）
-- macOS 特定的系统配置（nix-darwin、Homebrew）
+- 用户空间配置（程序、shell、点文件）
+- 套件：捆绑相关模块的默认配置
+- 原型：定义系统角色，自动启用一组套件
 
-**第 5 层：Home 模块** (`modules/home/`)
-
-- 用户空间配置模块
-- Home Manager 集成点
-
-**第 6 层：套件和原型** (`modules/*/suites/`、`modules/*/archetypes/`)
-
-- 组合多个模块的捆绑默认配置
-- 针对常见用例的意见式栈
-
-**第 7 层：主机和用户配置** (`systems/`、`homes/`)
+**第 5 层：主机和用户配置** (`systems/`、`homes/`)
 
 - 按架构和主机名的具体系统部署
 - 按用户名和主机名的具体用户配置
@@ -124,7 +116,6 @@ with lib; { ... }
 flake.nix
 └── flake/default.nix (flake-parts 入口点)
     ├── ../lib          → flake.lib 导出
-    ├── overlays.nix    → flake.overlays
     ├── configs.nix     → nixosConfigurations, darwinConfigurations
     └── home.nix        → homeConfigurations, homeModules
 ```
@@ -187,8 +178,7 @@ nix_dotfiles/
 ├── flake/
 │   ├── default.nix        # 主编排模块
 │   ├── configs.nix        # 系统配置生成（NixOS + Darwin）
-│   ├── home.nix           # Home 配置生成
-│   └── overlays.nix       # 覆盖层定义
+│   └── home.nix           # Home 配置生成
 │
 ├── lib/
 │   ├── default.nix        # 库导出
