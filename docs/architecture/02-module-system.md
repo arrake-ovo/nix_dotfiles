@@ -87,12 +87,10 @@ NixOS 和 Darwin 之间共享的跨平台模块：
 |------|------|
 | `host/` | 主机名选项 |
 | `user/` | 用户身份、shell 别名、XDG 目录 |
-| `suites/common/` | 通用套件：基础包 + zsh + 终端工具 |
-| `suites/development/` | 开发套件：gh, nil, statix, nixfmt 等 |
-| `roles/developer/` | 开发者角色：激活 common + development |
-| `programs/legacy-minimal/` | 传统 dotfile 符号链接 |
-| `programs/terminal/shell/zsh/` | Zsh 配置 |
-| `programs/terminal/tools/*/` | git, direnv, eza, fzf, gh, jq, lazygit, ripgrep, zoxide |
+| `suites/` | 功能捆绑，按场景组合相关配置 |
+| `roles/` | 组合多个 suites 形成特定身份 |
+| `programs/` | 各类程序的声明式配置（shell、终端工具、应用等） |
+| 兼容层 | 对传统 dotfile 的渐进式迁移支持 |
 
 ## 2.2 模块目录约定
 
@@ -326,3 +324,79 @@ flake = {
   homeConfigurations = lib.mapAttrs' generateHomeConfiguration allHomes;
 };
 ```
+
+## 2.7 新增软件配置流程
+
+新增一个软件、工具或应用配置时，先判断职责归属，再创建目录。
+
+### 第一步：判断放置位置
+
+| 软件类型 | 放置位置 |
+|----------|----------|
+| 用户空间配置、dotfiles、CLI、编辑器、shell、git、开发工具 | `modules/home/` |
+| macOS 系统设置、Homebrew、nix-darwin 集成 | `modules/darwin/` |
+| NixOS 服务、硬件、网络、安全、systemd | `modules/nixos/` |
+| Darwin 和 NixOS 共享的系统级能力 | `modules/common/` |
+| 单台机器专属配置 | `systems/{arch}/{hostname}/default.nix` |
+| 单个用户在单台机器上的专属配置 | `homes/{arch}/{user}@{host}/default.nix` |
+
+默认优先 Home-First：只要是用户偏好、工具配置或 dotfile，就优先放入 `modules/home/`。
+
+### 第二步：选择 Home 程序分类
+
+`modules/home/programs/` 下按用途分类，不按安装来源分类：
+
+| 类型 | 路径 |
+|------|------|
+| shell | `modules/home/programs/terminal/shell/<name>/` |
+| 终端工具 | `modules/home/programs/terminal/tools/<name>/` |
+| 编辑器 | `modules/home/programs/editors/<name>/` |
+| 开发语言工具链 | `modules/home/programs/development/languages/<name>/` |
+| 开发平台工具 | `modules/home/programs/development/tools/<name>/` |
+| 图形应用配置 | `modules/home/programs/apps/<name>/` |
+| 文件管理 | `modules/home/programs/files/<name>/` |
+
+如果没有合适分类，先复用最接近的已有目录；只有当多个模块都会受益时才新增分类目录。
+
+### 第三步：命名
+
+- 目录名使用 `kebab-case`。
+- option 名使用 `camelCase`。
+- 软件名称优先匹配项目既有命名；没有既有命名时使用清晰、短小、可读的名称。
+
+示例：
+
+| 软件 | 推荐目录 |
+|------|----------|
+| GitHub CLI | `gh` |
+| lazygit | `lazygit` |
+| Visual Studio Code | `vscode` |
+| direnv | `direnv` |
+
+### 第四步：决定启用层级
+
+| 层级 | 用途 |
+|------|------|
+| 单个模块 | 一个软件或一项能力的最小配置单元 |
+| suite | 一组常用模块的默认组合 |
+| role | 用户身份组合，例如开发者 |
+| archetype | 机器角色组合，例如工作站或服务器 |
+| host/user 配置 | 具体机器或具体用户的最终选择 |
+
+规则：
+
+- 常见工具组放入 suite。
+- 用户身份组合放入 role。
+- 机器角色组合放入 archetype。
+- 一次性偏好只放 host/user 配置，不要抽象。
+- suite 中启用下游模块时应使用 `mkDefault`，让具体配置可以覆盖。
+
+### 第五步：拆分安装和配置
+
+同一个软件可能同时有安装来源和用户配置。按职责拆分：
+
+- Homebrew 安装项归 `modules/darwin/`。
+- 用户配置归 `modules/home/`。
+- NixOS 系统服务归 `modules/nixos/`。
+
+不要因为软件通过 Homebrew 安装，就把它的用户配置也放进 Darwin 模块。
