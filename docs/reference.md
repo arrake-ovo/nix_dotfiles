@@ -1,3 +1,21 @@
+# 外部参考：khanelinix
+
+> **仓库地址**：[https://github.com/khaneliman/khanelinix](https://github.com/khaneliman/khanelinix)
+>
+> **本地克隆**：`~/nix/khanelinix` （375 个模块）
+>
+> 本项目设计模式和模块实现参考该仓库。AI agent 应优先读取本地 clone，而非仅依赖本文。
+
+## AI Agent 使用指引
+
+- 本文是对 khanelinix 架构的静态分析，可能过时。
+- **新增模块前**，先用 `read` 或 `rg` 搜索 `~/nix/khanelinix/modules/` 中的对应模块。
+- **全文搜索模式**：`rg -l "软件名" ~/nix/khanelinix/modules/` 找相关模块，然后逐个 `read`。
+- `fetch_content` 仅作为补充（查看远程最新变动或本地 clone 损坏时）。
+- 适配时注意命名空间差异：khanelinix 使用 `khanelinix.*`，本项目使用 `dot.*`。
+
+---
+
 本文是 docs/architecture-deep.md 的中文翻译版本
 
 # KhaneliNix 架构深度解析

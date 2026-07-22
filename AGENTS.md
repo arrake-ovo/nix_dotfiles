@@ -185,7 +185,53 @@ Home Manager 独立配置变更时，优先评估对应 `homeConfigurations`，�
 - 不要在未理解调用方的情况下改 `lib/system/` 构建器。
 - 不要只根据架构文档想象代码已经完成迁移；必须用 `rg` 检查真实代码。
 
-## 7. 文档维护
+## 7. 外部参考：khanelinix
+
+本项目大量参考 [khaneliman/khanelinix](https://github.com/khaneliman/khanelinix) 的设计模式和模块实现。khanelinix 是本项目的上游参考仓库。
+
+**本地克隆路径**：`~/nix/khanelinix` （375 个模块）。
+
+### 何时引用 khanelinix
+
+当以下场景时，必须先查阅本地 khanelinix 仓库中对应代码：
+
+- **新增模块**：在 `modules/` 下创建新模块前，先找到 khanelinix 中的同类模块，理解实现模式。
+- **不确定配置写法**：对某个软件或服务的 Nix 配置不确定时，用 `rg` 搜索 khanelinix 仓库中对应的 `modules/` 文件。
+- **新增 suite/role/archetype**：先看 khanelinix 中如何组织套件和角色。
+- **Homebrew 集成**：Darwin 模块中需要 taps、brews、casks、mas 时，参考 khanelinix 的 `modules/darwin/` 和 homebrew 相关配置。
+
+### 如何引用
+
+优先使用本地文件（毫秒级，可全文搜索）：
+
+```bash
+# 全文搜索某个软件名
+rg -l "bat" ~/nix/khanelinix/modules/
+
+# 阅读特定模块
+# 使用 read 工具读取：~/nix/khanelinix/modules/home/programs/terminal/tools/git/default.nix
+
+# 列出 Darwin 模块目录
+ls ~/nix/khanelinix/modules/darwin/
+```
+
+当本地 clone 过时需要更新时：
+```bash
+cd ~/nix/khanelinix && git pull --ff-only
+```
+
+`fetch_content` 只在以下情况作为补充：需要查看仓库最新 commit 是否有变动，或本地 clone 损坏时。
+
+### 重要：适配而非照搬
+
+khanelinix 使用 `khanelinix.*` 命名空间, 本项目使用 `dot.*`（兼容 `arrakenix.*`）。引用时需要：
+
+1. 把 `khanelinix.*` 替换为 `dot.*`。
+2. 把 `khaneliman` 用户名替换为 `arrake`。
+3. 移除本项目不需要的功能（如 sops-nix 密钥管理、NixOS 特定硬件配置等）。
+4. 保持本项目的模块模板风格（`inherit (lib) ...`、`mkIf cfg.enable`）。
+
+## 8. 文档维护
 
 - 修改流程变化时，更新 `docs/conventions.md`。
 - 文档结构变化时，更新 `docs/README.md`。

@@ -15,7 +15,7 @@ in
   flake = {
     nixosConfigurations = lib.mapAttrs' (
       _name:
-      { system, hostname, ... }:
+      { system, hostname, ... }:  
       {
         name = hostname;
         value = self.lib.system.mkSystem {

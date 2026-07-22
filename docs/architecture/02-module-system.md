@@ -329,6 +329,23 @@ flake = {
 
 新增一个软件、工具或应用配置时，先判断职责归属，再创建目录。
 
+### 第零步：参考 khanelinix
+
+在动手写任何新模块之前，先查阅本地 khanelinix clone 中的对应模块实现。
+
+**本地路径**：`~/nix/khanelinix`
+
+```bash
+# 搜索相关模块
+rg -l "<软件名>" ~/nix/khanelinix/modules/
+# 阅读找到的模块
+read ~/nix/khanelinix/modules/home/programs/.../default.nix
+```
+
+- 找到 khanelinix 中同类模块的实现模式。
+- 注意命名空间适配：`khanelinix.*` → `dot.*`，`khaneliman` → `arrake`。
+- 具体指引见 [docs/reference.md](../reference.md) 和 AGENTS.md 第 7 节。
+
 ### 第一步：判断放置位置
 
 | 软件类型 | 放置位置 |
