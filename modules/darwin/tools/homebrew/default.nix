@@ -39,7 +39,6 @@ in
 
       casks = [
         "google-chrome"
-        "squirrel-app"
         "karabiner-elements"
         "alt-tab"
         "KeyClu"

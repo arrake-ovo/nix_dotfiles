@@ -19,6 +19,8 @@ in
     dot.darwin = {
       nix = mkDefault enabled;
       security.sudo = mkDefault enabled;
+      programs.inputmethods.squirrel = mkDefault enabled;
+
       tools.homebrew = mkDefault enabled;
 
       system = {
