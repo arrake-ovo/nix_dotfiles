@@ -27,7 +27,10 @@ in
         helix = mkDefault enabled;
         neovim = mkDefault enabled;
       };
-      apps.aerospace = mkDefault enabled;
+      apps = {
+        aerospace = mkDefault enabled;
+        squirrel = mkDefault enabled;
+      };
     };
   };
 }

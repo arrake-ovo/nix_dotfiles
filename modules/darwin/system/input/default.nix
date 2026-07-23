@@ -17,10 +17,9 @@ in
   config = mkIf cfg.enable {
     ###########################################################################
     #
-    #  macOS keyboard & input source configuration
+    #  macOS 键盘和输入法配置
     #
-    #  All the configuration options are documented here:
-    #    https://daiderd.com/nix-darwin/manual/index.html#sec-options
+    #  配置项文档: https://daiderd.com/nix-darwin/manual/index.html#sec-options
     #
     ###########################################################################
 
@@ -58,21 +57,21 @@ in
       };
 
       keyboard = {
-        enableKeyMapping = true; # enable key mapping so that we can use `option` as `control`
+        enableKeyMapping = true; # 启用键盘映射
 
-        # NOTE: do NOT support remap capslock to both control and escape at the same time
-        remapCapsLockToControl = false; # remap caps lock to control, useful for emac users
-        remapCapsLockToEscape = true; # remap caps lock to escape, useful for vim users
+        # 注意：不能同时把 capslock 映射成 control 和 escape
+        remapCapsLockToControl = false; # 把 capslock 映射成 control，emacs 用户常用
+        remapCapsLockToEscape = true; # 把 capslock 映射成 escape，vim 用户常用
 
-        # swap left command and left alt
-        # so it matches common keyboard layout: `ctrl | command | alt`
+        # 交换左 command 和左 alt
+        # 让键盘布局变成: `ctrl | command | alt`
         #
-        # disabled, caused only problems!
+        # 已禁用，只会引起问题！
         swapLeftCommandAndLeftAlt = false;
 
         userKeyMapping = [
-          # remap escape to caps lock
-          # so we swap caps lock and escape, then we can use caps lock as escape
+          # 把 escape 映射到 capslock
+          # 交换 caps lock 和 escape 之后，就能用 caps lock 当 escape 用了
           {
             HIDKeyboardModifierMappingSrc = 30064771113;
             HIDKeyboardModifierMappingDst = 30064771129;

@@ -1,0 +1,367 @@
+# Squirrel settings
+# encoding: utf-8
+# 修改自: https://github.com/rime/squirrel/blob/master/data/squirrel.yaml
+#
+# COMMIT SHA: ea6720a0348a2f047ca0d8d87d82b221ac03be7b
+
+config_version: "2025-04-24"
+
+# 可用选项：last | default | _custom_
+# last：上次使用的拉丁字母键盘布局
+# default：美国（ABC）键盘布局
+# _custom_：键盘布局，例如 'com.apple.keylayout.USExtended' 或简写的 'USExtended'
+# keyboard_layout: com.apple.keylayout.Colemak
+keyboard_layout: last
+
+# 给打字贼快的家伙们设置的按键持续时间（
+chord_duration: 0.1 # seconds
+
+# options: always | never | appropriate
+show_notifications_when: appropriate
+show_notifications_via_notification_center: true
+
+app_options:
+# no_inline: true              # 不使用行內編輯
+# ascii_punct: true            # 中文状态输出英文标点(半角) 
+# ascii_mode: true             # true默认英文,false默认中文
+# vim_mode: true               # 退出VIM插入模式自動切換輸入法狀態
+# 获取命令：osascript -e 'id of app "App名"'
+  com.apple.Spotlight:
+    ascii_mode: true    # 开启默认英文
+ # com.microsoft.VSCode:
+ #   ascii_mode: true
+  com.googlecode.iterm2:
+    ascii_mode: true
+#  com.mitchellh.ghostty:
+#    ascii_mode: true
+#    vim_mode: true
+  org.vim.MacVim:
+    ascii_mode: true
+    vim_mode: true
+
+
+
+style:
+  color_scheme: macos14 # 主题方案  
+  color_scheme_dark: catppuccin_macchiato # 指定深色模式时输入法所使用的主题方案
+  translucency: true # 背景半透明总开关，不需要关掉即可
+
+  # 是否将选定的候选项作为文本嵌入到输入框中
+  inline_candidate: false
+  # 是否将候选栏贴附到屏幕边缘来减少跳动
+  memorize_size: true
+  # 是否允许透明颜色之间的堆叠
+  mutual_exclusive: true
+  # 启用小箭头来看能否上下翻页
+  show_paging: false
+
+  # 以下为鼠须管默认设置
+  candidate_list_layout: linear # stacked | linear
+  text_orientation: horizontal # horizontal | vertical
+  inline_preedit: true # 是否内嵌输入码
+  corner_radius: 7
+  hilited_corner_radius: 0
+  border_height: -2
+  border_width: -2
+  line_spacing: 5
+  spacing: 8
+  # 大于 0 则会在高亮的候选项周围绘制阴影
+  shadow_size: 0
+  # 控制非高亮候选背景大小，相对于高亮
+  surrounding_extra_expansion: 0
+  # 候选项的格式
+  candidate_format: "[label]. [candidate] [comment]"
+  # base_offset: 0 # 竖排文字的基线调整
+  font_face: "Lucida Grande"
+  font_point: 16
+  # label_font_face: 'Lucida Grande'
+  label_font_point: 12
+  # comment_font_face: 'Lucida Grande'
+  comment_font_point: 16
+
+preset_color_schemes:
+  # 关于主题中的各个设置项的说明，详见文件末尾
+
+
+ 
+  reimu:
+    name: "灵梦／Reimu"
+    author: "Lufs X <i@isteed.cc>"
+
+    font_face: "LXGWWenKai-Regular, PingFangSC"
+    font_point: 17
+    label_font_face: "LXGWWenKai-Regular, PingFangSC"
+    label_font_point: 14
+
+    candidate_format: "[label]\u2005[candidate] [comment]"
+    candidate_list_layout: linear
+    text_orientation: horizontal
+    inline_preedit: true
+
+    corner_radius: 7
+    hilited_corner_radius: 6
+    border_height: 1
+    border_width: 1
+    alpha: 0.95
+    shadow_size: 2
+
+    color_space: display_p3
+    back_color: 0xF5FCFD
+    candidate_text_color: 0x282C32
+    comment_text_color: 0x717172
+    label_color: 0x888785
+    hilited_candidate_back_color: 0xF5FCFD
+    hilited_candidate_text_color: 0x4F00E5
+    hilited_comment_text_color: 0x9F9CF2
+    hilited_candidate_label_color: 0x4F00E5
+    text_color: 0x6B54E9
+    hilited_text_color: 0xD8000000
+
+  reimu_dark:
+    name: "灵梦／Reimu／深色"
+    author: "Lufs X <i@isteed.cc>"
+
+    font_face: "LXGWWenKai-Regular, PingFangSC"
+    font_point: 17
+    label_font_face: "LXGWWenKai-Regular, PingFangSC"
+    label_font_point: 14
+
+    candidate_format: "[label]\u2005[candidate] [comment]"
+    candidate_list_layout: linear
+    text_orientation: horizontal
+    inline_preedit: true
+
+    corner_radius: 7
+    hilited_corner_radius: 6
+    border_height: 1
+    border_width: 1
+    alpha: 0.95
+    shadow_size: 2
+
+    color_space: display_p3
+    back_color: 0x020A00
+    border_color: 0x020A00
+    candidate_text_color: 0xC0C0C0
+    comment_text_color: 0x717172
+    label_color: 0x717172
+    hilited_candidate_back_color: 0x0C140A
+    hilited_candidate_text_color: 0x3100C7
+    hilited_comment_text_color: 0x7772AF
+    hilited_candidate_label_color: 0x3100C7
+    text_color: 0x6B54E9
+    hilited_text_color: 0xD8000000
+
+ 
+
+    
+
+  macos14:
+    name: "高仿 macOS 14"
+    author: "Lufs X <i@isteed.cc>"
+
+    font_face: "PingFangSC-Regular"
+    font_point: 16
+    label_font_face: "PingFangSC-Regular"
+    label_font_point: 8
+    comment_font_face: "PingFangSC-Regular"
+    comment_font_point: 13
+
+    candidate_format: "[label]\u2003\u2003\u2003[candidate] [comment]\u2004\u2001"
+    candidate_list_layout: linear
+    text_orientation: horizontal
+    inline_preedit: true
+
+    corner_radius: 7
+    hilited_corner_radius: -1
+    border_height: -4
+    border_width: 2
+
+    color_space: display_p3
+    back_color: 0xE7E8EA
+    border_color: 0xE7E8EA
+    candidate_text_color: 0x464647
+    comment_text_color: 0x3F000000
+    label_color: 0x7F7F7F
+    hilited_candidate_back_color: 0xD05925
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0xDCDCDC
+    hilited_candidate_label_color: 0xFFFFFF
+    text_color: 0x3F000000
+    hilited_text_color: 0xD8000000
+
+  macos14_dark:
+    name: "高仿暗色 macOS 14"
+    author: "Lufs X <i@isteed.cc>"
+
+    font_face: "PingFangSC-Regular"
+    font_point: 16
+    label_font_face: "PingFangSC-Regular"
+    label_font_point: 8
+    comment_font_face: "PingFangSC-Regular"
+    comment_font_point: 13
+
+    candidate_format: "[label]\u2003\u2003\u2003[candidate] [comment]\u2004\u2001"
+    candidate_list_layout: linear
+    text_orientation: horizontal
+    inline_preedit: true
+
+    corner_radius: 7
+    hilited_corner_radius: -1
+    border_height: -4
+    border_width: 2
+
+    color_space: display_p3
+    back_color: 0x555557
+    border_color: 0x0C0C0C
+    candidate_text_color: 0xEEEEEE
+    comment_text_color: 0x80FFFFFF
+    label_color: 0x7C7C7C
+    hilited_candidate_back_color: 0xCA5824
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0xF0F0F0
+    hilited_candidate_label_color: 0xFFFFFF
+    text_color: 0x3F000000
+    hilited_text_color: 0xD8000000
+
+  mint_light_blue:
+    name: "蓝水鸭／Mint Light Blue"
+    author: Mintimate <"Mintimate's Blog">
+    translucency: true                     # 磨砂： false | true
+    mutual_exclusive: false                 # 色不叠加： false | true
+    shadow_size: 0                          # 阴影大小
+    line_spacing: 5                         # 行间距
+    # base_offset: 0                          # 字基高(Action版本鼠须管会崩溃)
+    alpha: 1                                # 透明度，0~1
+    spacing: 10                             # 拼音与候选项之间的距离 （inline_preedit: false）
+    back_color: 0xefefef                    # 底色
+    hilited_candidate_back_color: 0xed9564  # 选中底色
+    label_color: 0xcac9c8                   # 序号颜色
+    hilited_candidate_label_color: 0xefefef # 选中序号颜色
+    candidate_text_color: 0x424242          # 文字颜色
+    hilited_candidate_text_color: 0xefefef  # 选中文字颜色
+    comment_text_color: 0xcac9c8            # 注颜色
+    hilited_comment_text_color: 0xefefef    # 选中注颜色
+    text_color: 0x6495ed                    # 拼音颜色 （inline_preedit: false）
+    hilited_text_color: 0xed9564            # 选中拼音颜色 （inline_preedit: false）
+    
+  mint_dark_blue:
+    name: 黑水鸭／Mint Dark Blue
+    author: Mintimate <"Mintimate's Blog">
+    translucency: true                     # 磨砂： false | true
+    mutual_exclusive: false                 # 色不叠加： false | true
+    shadow_size: 0                          # 阴影大小
+    line_spacing: 5                         # 行间距
+    # base_offset: 0                          # 字基高(Action版本鼠须管会崩溃)
+    alpha: 1                                # 透明度，0~1
+    spacing: 10                             # 拼音与候选项之间的距离 （inline_preedit: false）
+    back_color: 0x424242                    # 底色
+    hilited_candidate_back_color: 0xc6c01a  # 选中底色
+    label_color: 0xefefef                   # 序号颜色
+    hilited_candidate_label_color: 0xefefef # 选中序号颜色
+    candidate_text_color: 0xefefef          # 文字颜色
+    hilited_candidate_text_color: 0xefefef  # 选中文字颜色
+    comment_text_color: 0xefefef            # 注颜色
+    hilited_comment_text_color: 0xffffff    # 选中注颜色
+    text_color: 0x6495ed                    # 拼音颜色 （inline_preedit: false）
+    hilited_text_color: 0xc6c01a            # 选中拼音颜色 （inline_preedit: false）
+    
+  mint_light_green:
+    name: "碧皓青／Mint Light Green"
+    author: Mintimate <"Mintimate's Blog">
+    translucency: true                      # 磨砂： false | true
+    mutual_exclusive: false                 # 色不叠加： false | true
+    color_space: srgb
+    back_color: 0xEFEFEF                    # 底色
+    candidate_text_color: 0x323232          # 文字颜色
+    comment_text_color: 0x878787            # 注颜色
+    label_color: 0x323232                   # 序号颜色
+    hilited_candidate_back_color: 0x7BAE4F  # 选中底色
+    hilited_candidate_text_color: 0xFFFFFF  # 选中文字颜色
+    hilited_comment_text_color: 0xDFF0EE    # 选中注颜色
+    hilited_candidate_label_color: 0xEFEFEF # 选中序号颜色
+    text_color: 0x7BAE4F                    # 拼音颜色 （inline_preedit: false）
+    hilited_text_color: 0xed9564            # 选中拼音颜色 （inline_preedit: false）
+
+    
+  mint_dark_green:
+    name: "碧月青／Mint Dark Green"
+    author: Mintimate <"Mintimate's Blog">
+    translucency: true                      # 磨砂： false | true
+    mutual_exclusive: false                 # 色不叠加： false | true
+    color_space: srgb
+    back_color: 0x323232                    # 底色
+    candidate_text_color: 0xE8E8E8          # 文字颜色
+    comment_text_color: 0xBEBEBE            # 注颜色
+    label_color: 0xB0B0B0                   # 序号颜色
+    hilited_candidate_back_color: 0x83C81C  # 选中底色
+    hilited_candidate_text_color: 0xEFEFEF  # 选中文字颜色
+    hilited_comment_text_color: 0xF4FAF8    # 选中注颜色
+    hilited_candidate_label_color: 0xEFEFEF # 选中序号颜色
+    text_color: 0x83C81C                    # 拼音颜色 （inline_preedit: false）
+    hilited_text_color: 0xed9564            # 选中拼音颜色 （inline_preedit: false）
+
+  catppuccin_macchiato:
+      name: Catppuccin Macchiato
+
+      back_color: 0x261918                         # 候选条背景色 Crust
+      border_color: 0x30201E                       # 边框色 Mantle
+      text_color: 0xE0C0B8                         # 拼音行文字颜色 Subtext1
+      label_color: 0xCBADA5                        # 预选栏编号颜色 Subtext0
+      candidate_text_color: 0xF5D3CA               # 预选项文字颜色 Text
+      hilited_back_color: 0xF6A0C6                 # 第一候选项背景背景色 Mauve
+      hilited_candidate_text_color: 0x3A2724       # 第一候选项文字颜色 Base
+      hilited_candidate_label_color: 0x4F3A36      # 第一候选项编号颜色 Surface0
+      hilited_text_color: 0x70B558                 # 高亮拼音 (需要开启内嵌编码) Surface2
+      hilited_comment_text_color: 0x4F3A36         # 注解文字高亮 Surface2
+      comment_text_color: 0x70B558                 # 拼音等提示文字颜色 Surface0
+
+
+
+
+  # 若都有值，则对应的生效逻辑为
+  ## .[custom].yaml > style/preset_color_schemes/[配置名] > style
+  #
+  # 各个设置项的简要作用说明
+  # 以下出现的颜色均为 16 进制色值，(A)BGR顺序
+  ## alpha: 透明度
+  ## back_color: 候选条背景色
+  ## base_offset: 候选框与输入框的垂直偏移量
+  ## border_color: 边框颜色
+  ## border_color_width: 输入条边框宽度
+  ## border_height: 窗口上下高度
+  ## border_width: 窗口左右宽度
+  ## candidate_format: 候选格式
+  ## candidate_list_layout: 候选列表布局
+  ## candidate_spacing: 候选字间隔
+  ## candidate_text_color: 候选项文字颜色
+  ## color_space: 色彩空间
+  ## comment_font_face: 拼音等提示文字字体
+  ## comment_font_point: 拼音等提示文字字号
+  ## comment_text_color: 拼音等提示文字颜色
+  ## corner_radius: 候选条圆角
+  ## font_face: 文本字体
+  ## font_point: 文本字体大小
+  ## hilite_padding: 候选字背景色色块高度
+  ## hilited_back_color: 选中候选项背景背景色
+  ## hilited_candidate_back_color: 选中候选项背景色
+  ## hilited_candidate_label_color: 选中候选项编号颜色
+  ## hilited_candidate_text_color: 选中候选项文字颜色
+  ## hilited_comment_text_color: 注解文字高亮颜色
+  ## hilited_corner_radius: 选中候选项圆角
+  ## hilited_label_color: 选中候选项编号颜色
+  ## hilited_text_color: 高亮文本颜色
+  ## inline_preedit: 输入码是否内嵌显示
+  ## label_color: 编号颜色
+  ## label_font_face: 编号字体
+  ## label_font_point: 编号大小
+  ## label_format: 编号格式
+  ## line_spacing: 行间距
+  ## margin_x: 字左右边距
+  ## margin_y: 字上下边距
+  ## min_height: 最小高度
+  ## min_width: 最小宽度
+  ## round_corner: 候选字背景色块圆角幅度
+  ## shadow_size: 阴影大小
+  ## spacing: 间距
+  ## text_color: 文本颜色
+  ## text_orientation: 文本方向
