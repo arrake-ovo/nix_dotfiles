@@ -54,11 +54,9 @@ in
       };
 
       NSGlobalDomain = {
-        AppleAccentColor = 1;
         AppleShowAllExtensions = true;
         AppleShowScrollBars = "Automatic";
         NSAutomaticWindowAnimationsEnabled = false;
-        WebKitDeveloperExtras = true;
       };
 
       screencapture = {
