@@ -10,11 +10,9 @@ let
   cfg = config.dot.home.programs.terminal.shell.zsh;
 
   outOfStore = config.lib.file.mkOutOfStoreSymlink;
-  link = file: outOfStore "${cfg.sourceRoot}/${file}";
-  linkExec = file: {
-    source = outOfStore "${cfg.sourceRoot}/${file}";
-    executable = true;
-  };
+  cfgFile = path: outOfStore "${cfg.sourceRoot}/${path}";
+  cfgDir = path: { source = outOfStore "${cfg.sourceRoot}/${path}"; recursive = true; };
+  cfgExec = path: { source = outOfStore "${cfg.sourceRoot}/${path}"; executable = true; };
 in
 {
   options.dot.home.programs.terminal.shell.zsh = {
@@ -44,22 +42,14 @@ in
     };
 
     home.file = {
-      ".zshrc".source = link ".zshrc";
-      ".zshenv".source = link "zsh/.zshenv";
-      ".zimrc".source = link ".zimrc";
-      ".zim".source = link "zsh/.zim";
+      ".zshrc".source = cfgFile ".zshrc";
+      ".zshenv".source = cfgFile ".zshenv";
+      ".zimrc".source = cfgFile ".zimrc";
+      ".zim" = cfgDir ".zim";
 
-      ".config/fzf" = {
-        source = link "fzf";
-        recursive = true;
-      };
+      ".config/fzf" = cfgDir ".config/fzf";
 
-      ".local/bin" = {
-        source = link "zsh/sh";
-        executable = true;
-      };
-
-      ".local/bin/fzf-preview.sh" = linkExec "fzf/bin/fzf-preview.sh";
+      ".local/bin" = cfgExec ".local/bin";
     };
   };
 }

@@ -12,8 +12,9 @@ in
 
   programs.home-manager.enable = true;
 
-  dot.home.programs.terminal.shell.zsh = {
-    enable = true;
-    sourceRoot = lib.file.getFile "config";
+  dot.home = {
+    roles.developer = enabled;
+
+    programs.terminal.shell.zsh.sourceRoot = lib.file.getFile "config/home";
   };
 }
