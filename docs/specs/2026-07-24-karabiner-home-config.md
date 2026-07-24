@@ -1,56 +1,43 @@
-# Karabiner-Elements 用户配置纳入 Nix
+# Karabiner-Elements 配置纳入 Nix
 
 日期：2026-07-24  
-状态：已批准设计
+状态：已按用户反馈修订
 
 ## 背景
 
 - Darwin 层已通过 `dot.darwin.services.karabiner-elements` 安装 Homebrew cask，并由 `dot.darwin.suites.common` 默认启用。
-- 用户实际映射在 `~/.config/karabiner/karabiner.json`，尚未纳入仓库。
+- 用户实际映射在 `~/.config/karabiner/karabiner.json`，此前未纳入仓库。
 - 系统输入保持 ABC 布局，Colemak 与快捷键习惯由 Karabiner 负责。
 
 ## 目标
 
-将当前 Karabiner 用户配置纳入 Home Manager，行为与现网一致，配置管理方式对齐本仓库 yazi / helix / zellij 范式。
+将当前 Karabiner 配置纳入 nix-darwin 管理，安装与映射同模块维护。
 
-## 非目标
+## 设计决策（用户修订）
 
-- 不改 Darwin 安装方式（继续 Homebrew cask）。
-- 不把 185 条 Colemak 映射重写为 Nix attrset。
-- 不托管 `assets/`、`automatic_backups`。
-- 不做多机差异化 option。
-- 本次不自动执行 `switch`。
+- Karabiner 只在 Darwin 运行，**不**新建 `modules/home/` 模块。
+- **不**使用 `config/home/` 配置树。
+- 直接扩展现有 `modules/darwin/services/karabiner-elements/`。
+- 配置文件与模块同目录：`karabiner.json`。
+- 通过 `home-manager.users.<darwin-user>` 写入 `xdg.configFile`（对齐 squirrel 的 Darwin→HM 写法）。
 
-## 方案
-
-采用**静态 JSON + `mkOutOfStoreSymlink`**。
-
-### 文件变更
+## 文件变更
 
 | 路径 | 动作 |
 |------|------|
-| `config/home/.config/karabiner/karabiner.json` | 从当前 `~/.config/karabiner/karabiner.json` 迁入 |
-| `modules/home/programs/apps/karabiner/default.nix` | 新建 home 模块 |
-| `modules/home/suites/common/default.nix` | 默认启用 `apps.karabiner` |
-| `modules/darwin/services/karabiner-elements/default.nix` | 不改 |
+| `modules/darwin/services/karabiner-elements/default.nix` | 增加 xdg 配置部署 |
+| `modules/darwin/services/karabiner-elements/karabiner.json` | 迁入当前生效配置 |
+| `modules/home/programs/apps/karabiner/` | 不创建 |
+| `config/home/.config/karabiner/` | 不创建 |
 
-### Option
+## 模块行为
 
-```text
-modules/home/programs/apps/karabiner/default.nix
-  → dot.home.programs.apps.karabiner.enable
-```
+`dot.darwin.services.karabiner-elements.enable = true` 时：
 
-### 模块行为
+1. `homebrew.casks = [ "karabiner-elements" ]`
+2. `home-manager.users.${config.dot.darwin.user.name}.xdg.configFile."karabiner/karabiner.json".source = ./karabiner.json`
 
-- `enable` 为 true 时：
-  - 使用 `config.dot.home.programs.terminal.shell.zsh.sourceRoot`
-  - 通过 `config.lib.file.mkOutOfStoreSymlink` 链接
-  - 目标：`xdg.configFile."karabiner/karabiner.json"`
-- 不安装包（安装归 Darwin/Homebrew）。
-- 不链接 `assets/`：当前 profile 已内嵌全部 `complex_modifications.rules`。
-
-### 迁入配置内容（保持不变）
+## 迁入配置内容
 
 Profile：`Default`（selected）
 
@@ -60,33 +47,30 @@ Profile：`Default`（selected）
 
 `virtual_hid_keyboard.keyboard_type_v2 = "ansi"`。
 
-### 启用链路
+## 启用链路
 
 ```text
-dot.home.roles.developer
-  → dot.home.suites.common
-    → dot.home.programs.apps.karabiner = mkDefault enabled
+dot.darwin.suites.common
+  → services.karabiner-elements = mkDefault enabled
 ```
 
-`arrake@mba` 已启用 developer role，无需改 homes 配置。
+`systems/aarch64-darwin/mba` 已启用 `suites.common`，无需改 host 配置。
 
 ## 验证
 
 ```sh
-nix build '.#homeConfigurations."arrake@mba".activationPackage'
+darwin-rebuild build --flake .#mba
 ```
-
-若 flake 输出名不同，以实际 `homeConfigurations` 为准。
 
 成功标准：
 
-1. home 配置可构建。
-2. 模块 option 路径与目录镜像一致。
-3. 迁入 JSON 与当前生效配置内容一致（规则描述与数量不变）。
+1. Darwin 配置可构建。
+2. 模块仍只暴露 `dot.darwin.services.karabiner-elements.enable`。
+3. 迁入 JSON 规则描述与数量与当前生效配置一致。
 
-`switch` 仅在用户明确同意后执行。switch 后预期 `~/.config/karabiner/karabiner.json` 指向仓库 `config/home` 下对应文件。
+`switch` 仅在用户明确同意后执行。
 
 ## 风险
 
-- Karabiner GUI 可能改写 `karabiner.json`。使用 out-of-store symlink 时，GUI 修改会写回仓库工作树文件；这与 yazi/helix 同一模型，可接受。
-- 若本地已有非 symlink 的 `karabiner.json`，home-manager switch 可能因冲突失败，需先备份再切换。
+- `karabiner.json` 进入 nix store 后为只读 symlink；GUI 直接改配置会失败，需改仓库内 JSON 再 rebuild。
+- 若本地已有非 HM 管理的 `karabiner.json`，switch 可能因文件冲突失败，需先备份再切换。
