@@ -21,6 +21,11 @@ in
       font-awesome
     ];
 
+    homebrew.casks = [
+      "font-hack-nerd-font"
+      "sf-symbols"
+    ];
+
     system.defaults.NSGlobalDomain.AppleFontSmoothing = 1;
   };
 }

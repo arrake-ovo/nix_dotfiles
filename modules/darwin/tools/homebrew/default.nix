@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkIf mkEnableOption;
@@ -37,24 +33,7 @@ in
         "mas"
       ];
 
-      casks = [
-        "google-chrome"
-        "karabiner-elements"
-        "alt-tab"
-        "KeyClu"
-        "maccy"
-        "Snipaste"
-        "raycast"
-        "orion"
-        "stats"
-        "aldente"
-        "ghostty"
-        "wezterm"
-        "rio"
-        "obsidian"
-        "font-hack-nerd-font"
-        "sf-symbols"
-      ];
+      casks = [ ];
 
       masApps = { };
     };

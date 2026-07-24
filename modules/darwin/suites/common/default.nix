@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkIf mkDefault;
@@ -19,9 +15,33 @@ in
     dot.darwin = {
       nix = mkDefault enabled;
       security.sudo = mkDefault enabled;
-      programs.inputmethods.squirrel = mkDefault enabled;
 
       tools.homebrew = mkDefault enabled;
+
+      programs = {
+        inputmethods.squirrel = mkDefault enabled;
+
+        graphical.apps = {
+          chrome = mkDefault enabled;
+          alt-tab = mkDefault enabled;
+          keyclu = mkDefault enabled;
+          maccy = mkDefault enabled;
+          snipaste = mkDefault enabled;
+          raycast = mkDefault enabled;
+          orion = mkDefault enabled;
+          stats = mkDefault enabled;
+          aldente = mkDefault enabled;
+          obsidian = mkDefault enabled;
+        };
+
+        terminal.emulators = {
+          ghostty = mkDefault enabled;
+          wezterm = mkDefault enabled;
+          rio = mkDefault enabled;
+        };
+      };
+
+      services.karabiner-elements = mkDefault enabled;
 
       system = {
         env = mkDefault enabled;
