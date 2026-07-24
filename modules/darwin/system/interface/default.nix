@@ -66,17 +66,6 @@ in
       };
 
       CustomUserPreferences = {
-        "org.p0deje.Maccy" = {
-          SUAutomaticallyUpdate = 0;
-          SUEnableAutomaticChecks = 0;
-          SUHasLaunchedBefore = 1;
-
-          searchMode = "fuzzy";
-          previewDelay = 150;
-          maxMenuItemLength = 25;
-          menuIcon = "clipboard";
-        };
-
         "com.apple.SoftwareUpdate" = {
           AutomaticCheckEnabled = true;
           AutomaticDownload = 1;
