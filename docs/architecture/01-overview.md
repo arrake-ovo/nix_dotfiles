@@ -218,6 +218,12 @@ nix_dotfiles/
 │       ├── suites/        # common, development
 │       └── user/
 │
+├── config/                # 静态配置文件（非 Nix 模块）
+│   └── home/              # 镜像 $HOME 布局，供模块引用
+│       ├── .config/       # 如 helix、yazi、zellij、karabiner
+│       ├── .zshrc
+│       └── ...
+│
 ├── systems/
 │   ├── aarch64-darwin/mba/
 │   ├── x86_64-linux/<host>/
@@ -227,6 +233,8 @@ nix_dotfiles/
     ├── aarch64-darwin/arrake@mba/
     └── x86_64-linux/<user>@<host>/
 ```
+
+`config/home/` 只存放会映射到用户 home 的静态文件；模块逻辑仍在 `modules/`。引用方式见 [02-module-system.md](./02-module-system.md) 的「静态配置文件放 config/」。
 
 ## 1.6 数据流
 

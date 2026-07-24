@@ -14,8 +14,9 @@ in
   config = mkIf cfg.enable {
     homebrew.casks = [ "karabiner-elements" ];
 
-    # Karabiner 仅运行在 macOS；用户映射与 cask 安装放在同一 Darwin 模块。
+    # Karabiner 仅运行在 macOS；安装与部署同属 Darwin 模块。
+    # 静态配置文件放在 config/home/，不与 default.nix 同目录。
     home-manager.users.${user}.xdg.configFile."karabiner/karabiner.json".source =
-      ./karabiner.json;
+      lib.file.getFile "config/home/.config/karabiner/karabiner.json";
   };
 }

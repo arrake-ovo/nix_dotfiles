@@ -39,6 +39,7 @@ flake.nix
 | `modules/darwin/` | macOS / nix-darwin 模块 |
 | `modules/nixos/` | NixOS 系统模块 |
 | `modules/home/` | Home Manager 用户空间模块 |
+| `config/home/` | 映射到 `$HOME` 的静态配置文件（镜像 home 布局） |
 | `systems/{arch}/{host}/` | 具体机器的系统配置 |
 | `homes/{arch}/{user}@{host}/` | 具体用户在具体机器上的 Home Manager 配置 |
 | `packages/` | 本 flake 导出的自定义包 |

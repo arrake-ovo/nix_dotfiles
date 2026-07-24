@@ -413,7 +413,46 @@ read ~/nix/khanelinix/modules/home/programs/.../default.nix
 同一个软件可能同时有安装来源和用户配置。按职责拆分：
 
 - Homebrew 安装项归 `modules/darwin/`。
-- 用户配置归 `modules/home/`。
+- 跨平台或可移植的用户配置归 `modules/home/`。
+- 仅在 macOS 运行、且与系统安装强绑定的软件，模块可放在 `modules/darwin/`，通过 `home-manager.users.<name>` 部署用户文件（例如 Karabiner、Squirrel）。
 - NixOS 系统服务归 `modules/nixos/`。
 
-不要因为软件通过 Homebrew 安装，就把它的用户配置也放进 Darwin 模块。
+不要因为软件通过 Homebrew 安装，就把**跨平台**用户配置也塞进 Darwin 模块。
+
+### 第六步：静态配置文件放 `config/`，不放 `modules/`
+
+Nix 模块（`default.nix`、option、启用逻辑）和静态配置文件（json / toml / kdl / lua 等）分开存放。
+
+| 内容 | 放置位置 | 反例 |
+|------|----------|------|
+| 模块逻辑 | `modules/**/<name>/default.nix` | 把大段 json 内嵌进 `default.nix` |
+| 映射到 `$HOME` 的静态文件 | `config/home/`，目录结构镜像 home | `modules/**/karabiner.json` |
+| 引用方式 | `lib.file.getFile "config/home/..."` 或 `sourceRoot` + `mkOutOfStoreSymlink` | `source = ./app.json` 与模块同目录 |
+
+`config/home/` 镜像用户 home 布局：
+
+```text
+config/home/
+├── .config/
+│   ├── helix/config.toml
+│   ├── karabiner/karabiner.json
+│   ├── yazi/
+│   └── zellij/config.kdl
+├── .zshrc
+└── ...
+```
+
+规则：
+
+1. **模块目录只放 Nix 模块代码**（通常是 `default.nix`）。不要把应用的 json/toml/xml 等配置资产和 `default.nix` 放在同一目录。
+2. **会部署到用户 home 的文件**一律放 `config/home/`，路径与目标 home 相对路径一致。  
+   例：目标 `~/.config/karabiner/karabiner.json` → 仓库 `config/home/.config/karabiner/karabiner.json`。
+3. **Home 模块**优先通过 `dot.home.programs.terminal.shell.zsh.sourceRoot`（即 `config/home`）+ `mkOutOfStoreSymlink` 引用，便于直接编辑仓库文件。
+4. **Darwin / NixOS 模块**若需部署 home 文件，用 `home-manager.users.<name>`，文件源仍指向 `config/home/...`，使用 `lib.file.getFile`：
+
+```nix
+home-manager.users.${config.dot.darwin.user.name}.xdg.configFile."karabiner/karabiner.json".source =
+  lib.file.getFile "config/home/.config/karabiner/karabiner.json";
+```
+
+5. 只有生成逻辑本身就是 Nix（小 attrset → `builtins.toJSON`）时，才可以不落静态文件；大映射表、上游导出的完整配置优先作为 `config/home/` 静态文件管理。

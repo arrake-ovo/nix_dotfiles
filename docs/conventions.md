@@ -49,3 +49,11 @@
 - 每个模块使用目录模块：`<name>/default.nix`。
 - 架构章节可以使用数字前缀，例如 `01-overview.md`。
 - 规格文档使用日期前缀：`YYYY-MM-DD-topic.md`。
+
+## 5. 静态配置文件
+
+- 应用/工具的静态配置文件放 `config/`，**不要**和 `modules/**/default.nix` 放在同一目录。
+- 映射到用户 home 的文件放 `config/home/`，路径镜像 `$HOME`：  
+  `~/.config/foo/bar` → `config/home/.config/foo/bar`。
+- 模块通过 `lib.file.getFile "config/home/..."` 或 `sourceRoot` + `mkOutOfStoreSymlink` 引用。
+- 细节与示例见 [architecture/02-module-system.md](architecture/02-module-system.md)「第六步：静态配置文件放 config/」。

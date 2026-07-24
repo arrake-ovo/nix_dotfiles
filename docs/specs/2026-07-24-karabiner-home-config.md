@@ -16,26 +16,25 @@
 ## 设计决策（用户修订）
 
 - Karabiner 只在 Darwin 运行，**不**新建 `modules/home/` 模块。
-- **不**使用 `config/home/` 配置树。
-- 直接扩展现有 `modules/darwin/services/karabiner-elements/`。
-- 配置文件与模块同目录：`karabiner.json`。
+- 模块逻辑放在现有 `modules/darwin/services/karabiner-elements/`。
+- 静态 `karabiner.json` 放 `config/home/.config/karabiner/`（镜像 `$HOME`，不与 `default.nix` 同目录）。
 - 通过 `home-manager.users.<darwin-user>` 写入 `xdg.configFile`（对齐 squirrel 的 Darwin→HM 写法）。
+- 引用：`lib.file.getFile "config/home/.config/karabiner/karabiner.json"`。
 
 ## 文件变更
 
 | 路径 | 动作 |
 |------|------|
 | `modules/darwin/services/karabiner-elements/default.nix` | 增加 xdg 配置部署 |
-| `modules/darwin/services/karabiner-elements/karabiner.json` | 迁入当前生效配置 |
+| `config/home/.config/karabiner/karabiner.json` | 迁入当前生效配置 |
 | `modules/home/programs/apps/karabiner/` | 不创建 |
-| `config/home/.config/karabiner/` | 不创建 |
 
 ## 模块行为
 
 `dot.darwin.services.karabiner-elements.enable = true` 时：
 
 1. `homebrew.casks = [ "karabiner-elements" ]`
-2. `home-manager.users.${config.dot.darwin.user.name}.xdg.configFile."karabiner/karabiner.json".source = ./karabiner.json`
+2. `home-manager.users.${config.dot.darwin.user.name}.xdg.configFile."karabiner/karabiner.json".source = lib.file.getFile "config/home/.config/karabiner/karabiner.json"`
 
 ## 迁入配置内容
 
@@ -72,5 +71,5 @@ darwin-rebuild build --flake .#mba
 
 ## 风险
 
-- `karabiner.json` 进入 nix store 后为只读 symlink；GUI 直接改配置会失败，需改仓库内 JSON 再 rebuild。
+- `karabiner.json` 经 `lib.file.getFile` 进入 nix store 后为只读 symlink；GUI 直接改配置会失败，需改 `config/home/.config/karabiner/karabiner.json` 再 rebuild。
 - 若本地已有非 HM 管理的 `karabiner.json`，switch 可能因文件冲突失败，需先备份再切换。

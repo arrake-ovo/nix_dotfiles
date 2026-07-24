@@ -33,8 +33,9 @@
 ### 新增软件、工具或应用配置
 
 - 读 [模块系统架构](docs/architecture/02-module-system.md)。
-- 读其中的“新增软件配置流程”。
+- 读其中的“新增软件配置流程”和“静态配置文件放 config/”。
 - 先判断配置归属：`modules/home/`、`modules/darwin/`、`modules/nixos/`、`modules/common/`、`systems/` 或 `homes/`。
+- 静态配置文件（json/toml/kdl 等）放 `config/home/`（镜像 `$HOME`），不要和 `modules/**/default.nix` 同目录。
 
 ### 修改顶层 flake 输出
 
@@ -180,6 +181,7 @@ Home Manager 独立配置变更时，优先评估对应 `homeConfigurations`，�
 
 - 不要绕过自动发现机制手动硬编码大量 flake 输出。
 - 不要把用户空间配置塞进系统模块。
+- 不要把应用静态配置文件（json/toml/kdl 等）和 `modules/**/default.nix` 放在同一目录；应放 `config/home/` 并镜像 `$HOME` 路径。
 - 不要在 reusable module 中写死 `arrake`、`mba` 或某个绝对路径，除非该模块本身就是 host/user 专用配置。
 - 不要把 secrets、token、私钥或机器特有敏感信息提交进仓库。
 - 不要在未理解调用方的情况下改 `lib/system/` 构建器。
