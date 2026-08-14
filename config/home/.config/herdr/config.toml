@@ -1,8 +1,8 @@
 # herdr — AI coding agent 的终端复用器
 # 习惯对齐：
-#   - Dracula 主题（同 fzf / fzf-tab 的配色）
-#   - 方向键导航 pane（Colemak 布局友好，避开 hjkl 分散：j→y, k→m, l→u）
-#   - zsh + login shell（确保 homebrew PATH 在 pane 里生效）
+#   - Dracula 主题（同 fzf / fzf-tab 配色）
+#   - zsh + login shell（homebrew PATH 完整）
+#   - Colemak 键盘布局：方向导航用 neui（n=左 e=下 u=上 i=右，同 nvim colemak.lua）
 
 # 跳过首次引导
 onboarding = false
@@ -19,16 +19,61 @@ shell_mode = "auto"
 # prefix 保持 ctrl+b（Colemak 下 b 位置不变，食指按 b + 小指按 Ctrl，分工自然）
 prefix = "ctrl+b"
 
-# navigate mode 的 pane 导航：方向键
-# 注意：herdr 已内置 left/right 方向键为 navigate_pane 的 alias，这里补 up/down
-navigate_pane_up = "up"
-navigate_pane_down = "down"
+# ===== 全局 =====
+help = "prefix+?"
+settings = "prefix+,"
+reload_config = "prefix+shift+r"
+detach = "prefix+q"
 
-# prefix + 方向键：切换 pane 焦点（Colemak 下用方向键而非 hjkl）
-focus_pane_left = "prefix+left"
-focus_pane_down = "prefix+down"
-focus_pane_up = "prefix+up"
-focus_pane_right = "prefix+right"
+# ===== workspace =====
+new_workspace = "prefix+ctrl+n"
+new_worktree = "prefix+shift+g"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+navigate_workspace_up = "up"
+navigate_workspace_down = "down"
 
-[ui]
-agent_panel_sort = "priority"
+# ===== tab =====
+new_tab = "prefix+c"
+rename_tab = "prefix+shift+t"
+previous_tab = "prefix+p"
+next_tab = "prefix+ctrl+p"
+switch_tab = "prefix+1..9"
+close_tab = "prefix+shift+x"
+
+# ===== pane 导航（Colemak neui：n=左 e=下 u=上 i=右）=====
+navigate_pane_left = "n"
+navigate_pane_down = "e"
+navigate_pane_up = "u"
+navigate_pane_right = "i"
+focus_pane_left = "prefix+n"
+focus_pane_down = "prefix+e"
+focus_pane_up = "prefix+u"
+focus_pane_right = "prefix+i"
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+
+# ===== 分屏（类比 nvim：s = split；herdr 只支持右/下两方向）=====
+split_vertical = "prefix+s"
+split_horizontal = "prefix+shift+s"
+
+# ===== 交换 pane（大写 NEUI）=====
+swap_pane_left = "prefix+shift+n"
+swap_pane_down = "prefix+shift+e"
+swap_pane_up = "prefix+shift+u"
+swap_pane_right = "prefix+shift+i"
+
+# ===== pane 操作 =====
+close_pane = "prefix+x"
+zoom = "prefix+z"
+rename_pane = "prefix+shift+p"
+resize_mode = "prefix+r"
+
+# ===== 其他 =====
+edit_scrollback = "prefix+ctrl+e"
+copy_mode = "prefix+["
+toggle_sidebar = "prefix+b"
+open_notification_target = "prefix+o"
+remote_image_paste = "ctrl+v"
