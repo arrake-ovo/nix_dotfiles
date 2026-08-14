@@ -24,4 +24,7 @@ in {
 
   # nrm：npm/pnpm registry 镜像源切换 CLI（node 生态，与 nodejs_22 同源）
   dot.home.programs.development.tools.nrm.enable = true;
+
+  # fnm：node 版本管理（按项目 .nvmrc 自动切换；与 Nix nodejs_22 并存）
+  dot.home.programs.development.languages.fnm.enable = true;
 }
