@@ -31,6 +31,12 @@ in
           ''
             # 重启后 nix store 可能尚未挂载，先等它就绪再 exec
             /bin/wait4path /nix/store || exit 1
+            # herdr 异常退出时 socket 会残留，导致下次启动误判 "already running"；
+            # 若 socket 存在但无进程监听，先清理再启动
+            SOCK="$HOME/.config/herdr/herdr.sock"
+            if [ -S "$SOCK" ] && ! /usr/sbin/lsof "$SOCK" >/dev/null 2>&1; then
+              rm -f "$SOCK"
+            fi
             exec ${lib.getExe herdr} server
           ''
         ];
