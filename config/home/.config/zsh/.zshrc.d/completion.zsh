@@ -1,4 +1,4 @@
-# 补全样式（compinit 初始化由 ez-compinit 插件负责）
+# 补全样式（compinit 初始化在 .zshrc 里手动完成）
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 # fzf-tab 要求关闭原生菜单，否则会抢走 Tab 补全（fzf-tab 无法接管）
