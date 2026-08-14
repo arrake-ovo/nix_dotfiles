@@ -3,3 +3,5 @@
 .worktrees/
 result
 result-*
+.pi-subagents/
+pi-session-*.html
