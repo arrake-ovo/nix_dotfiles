@@ -23,8 +23,6 @@ in
   config = mkIf cfg.enable {
     environment.variables = {
       EDITOR = "nvim";
-      PAGER = "less -FR";
-      LESS = "--RAW-CONTROL-CHARS --wheel-lines=5 --LONG-PROMPT --no-vbell --wordwrap";
-    } // cfg.variables;
+      } // cfg.variables;
   };
 }

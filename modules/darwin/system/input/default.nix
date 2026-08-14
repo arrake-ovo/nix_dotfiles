@@ -1,15 +1,10 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkIf mkEnableOption;
 
   cfg = config.dot.darwin.system.input;
-in
-{
+in {
   options.dot.darwin.system.input = {
     enable = mkEnableOption "macOS input settings";
   };
@@ -27,7 +22,7 @@ in
       defaults = {
         CustomUserPreferences = {
           "com.apple.HIToolbox" = {
-            AppleFnUsageType = 1;
+            AppleFnUsageType = 3;
             AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.ABC";
             AppleEnabledInputSources = [
               # {
@@ -47,11 +42,11 @@ in
                 InputSourceKind = "Input Mode";
               }
             ];
-            AppleSelectedInputSources = {
-              InputSourceKind = "Keyboard Layout";
-              "KeyboardLayout ID" = 252;
-              "KeyboardLayout Name" = "ABC";
-            };
+            AppleSelectedInputSources = [{
+              "Bundle ID" = "im.rime.inputmethod.Squirrel";
+              "Input Mode" = "im.rime.inputmethod.Squirrel.Hans";
+              InputSourceKind = "Input Mode";
+            }];
           };
         };
       };
