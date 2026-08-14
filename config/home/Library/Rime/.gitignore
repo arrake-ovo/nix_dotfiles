@@ -1,0 +1,7 @@
+build/
+*.userdb/
+trash/
+installation.yaml
+user.yaml
+*.custom.yaml
+.DS_Store

@@ -3,7 +3,7 @@
 # 加载顺序：antidote 插件 → 拆分配置 → （prompt 在 .zshrc.d/prompt.zsh 里）
 
 # 1. antidote 插件管理器（由 nix 提供）
-ANTIDOTE_ZSH=${HOME}/.nix-profile/share/antidote/antidote.zsh
+ANTIDOTE_ZSH=${HOME}/.local/share/antidote/antidote.zsh
 if [[ -f ${ANTIDOTE_ZSH} ]]; then
   source ${ANTIDOTE_ZSH}
   # 静态 bundle 写到可写的 cache 目录（ZDOTDIR 是只读软链，无法写 .zsh_plugins.zsh）

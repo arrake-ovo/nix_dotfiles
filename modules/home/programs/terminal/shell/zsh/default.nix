@@ -34,6 +34,13 @@ in {
       # 其余配置（.zshrc / .zsh_plugins.txt / .zshrc.d / bin）都从 ~/.config/zsh 读取。
       ".zshenv".source = cfgFile ".zshenv";
       ".config/zsh" = cfgDir ".config/zsh";
+
+      # antidote 包没有 bin，只有 share/antidote/antidote.zsh；
+      # 链接到固定位置供 .zshrc source（antidote.zsh 依赖同目录的 functions/）。
+      ".local/share/antidote" = {
+        source = "${pkgs.antidote}/share/antidote";
+        recursive = true;
+      };
     };
   };
 }
