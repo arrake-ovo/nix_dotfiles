@@ -1,15 +1,9 @@
-{ inputs, config, lib, ... }:
+{ inputs, ... }: {
 
-let
-  inherit (lib) enabled;
-in
-{
-  dot.darwin = {
-    nix.enable = true;
-    security.sudo.enable = true;
-    suites.common.enable = true;
-    tools.homebrew.enable = true;
-  };
+  dot.darwin.suites.common.enable = true;
+
+  # 迁移期：旧的真实配置文件挡路时自动备份为 .backup，不再中断 switch
+  home-manager.backupFileExtension = "backup";
 
   nix-homebrew = {
     enable = true;

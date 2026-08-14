@@ -13,10 +13,9 @@ in
 
   config = mkIf cfg.enable {
     dot.darwin = {
-      nix = mkDefault enabled;
-      security.sudo = mkDefault enabled;
-
-      tools.homebrew = mkDefault enabled;
+      # 系统核心（nix / sudo / homebrew / system.*）由 suites.core 提供，避免重复定义
+      suites.core = mkDefault enabled;
+      services.karabiner-elements = mkDefault enabled;
 
       programs = {
         inputmethods.squirrel = mkDefault enabled;
@@ -24,12 +23,12 @@ in
         graphical.apps = {
           chrome = mkDefault enabled;
           alt-tab = mkDefault enabled;
-          keyclu = mkDefault enabled;
+          # keyclu = mkDefault enabled;
           maccy = mkDefault enabled;
-          snipaste = mkDefault enabled;
-          raycast = mkDefault enabled;
-          orion = mkDefault enabled;
-          stats = mkDefault enabled;
+          # snipaste = mkDefault enabled;
+          # raycast = mkDefault enabled;
+          # orion = mkDefault enabled;
+          # stats = mkDefault enabled;
           aldente = mkDefault enabled;
           obsidian = mkDefault enabled;
         };
@@ -41,14 +40,7 @@ in
         };
       };
 
-      services.karabiner-elements = mkDefault enabled;
-
-      system = {
-        env = mkDefault enabled;
-        fonts = mkDefault enabled;
-        input = mkDefault enabled;
-        interface = mkDefault enabled;
-      };
+      
     };
   };
 }
