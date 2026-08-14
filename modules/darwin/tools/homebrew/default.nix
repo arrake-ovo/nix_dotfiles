@@ -4,8 +4,7 @@ let
   inherit (lib) mkIf mkEnableOption;
 
   cfg = config.dot.darwin.tools.homebrew;
-in
-{
+in {
   options.dot.darwin.tools.homebrew = {
     enable = mkEnableOption "Homebrew package management";
   };
@@ -26,12 +25,13 @@ in
 
       onActivation = {
         autoUpdate = false;
-        cleanup = "zap";
+        # This first minimal configuration must not remove existing apps.
+        cleanup = "none";
       };
 
-      brews = [
-        "mas"
-      ];
+      # mas：Mac App Store 命令行（nix-darwin 的 masApps 依赖此命令）。
+      # 其余 CLI 工具走 nixpkgs/home-manager，这里不重复声明。
+      brews = [ "mas" ];
 
       casks = [ ];
 
