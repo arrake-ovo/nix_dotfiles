@@ -81,7 +81,7 @@ NixOS 和 Darwin 之间共享的跨平台模块：
 
 ### 第 3 层：Home Manager 模块 (`modules/home/`)
 
-跨平台用户空间配置（所有平台共享）：
+跨平台用户空间配置（所有平台共享）。**硬性约定：`modules/home/` 只放跨平台软件**（macOS / Linux 都能用）；macOS 专有软件（如 aerospace、karabiner、输入法）必须放 `modules/darwin/`，NixOS 专有软件放 `modules/nixos/`：
 
 | 模块 | 内容 |
 |------|------|
@@ -233,6 +233,8 @@ config = mkIf cfg.enable {
   };
 };
 ```
+
+suite 可以**聚合**其他 suite（`common` 聚合 `core` 即为此例），形成层级：聚合是"包含"语义，与 roles 的"身份"语义区分。依赖必须单向、无环（core 不反向引用 common）。
 
 ### 角色 (Roles)
 
@@ -427,7 +429,7 @@ Nix 模块（`default.nix`、option、启用逻辑）和静态配置文件（jso
 |------|----------|------|
 | 模块逻辑 | `modules/**/<name>/default.nix` | 把大段 json 内嵌进 `default.nix` |
 | 映射到 `$HOME` 的静态文件 | `config/home/`，目录结构镜像 home | `modules/**/karabiner.json` |
-| 引用方式 | `lib.file.getFile "config/home/..."` 或 `sourceRoot` + `mkOutOfStoreSymlink` | `source = ./app.json` 与模块同目录 |
+| 引用方式 | `lib.file.getFile "config/home/..."` + `mkOutOfStoreSymlink`（直接软链接，编辑即时生效） | `source = ./app.json` 与模块同目录 |
 
 `config/home/` 镜像用户 home 布局：
 
@@ -447,12 +449,18 @@ config/home/
 1. **模块目录只放 Nix 模块代码**（通常是 `default.nix`）。不要把应用的 json/toml/xml 等配置资产和 `default.nix` 放在同一目录。
 2. **会部署到用户 home 的文件**一律放 `config/home/`，路径与目标 home 相对路径一致。  
    例：目标 `~/.config/karabiner/karabiner.json` → 仓库 `config/home/.config/karabiner/karabiner.json`。
-3. **Home 模块**优先通过 `dot.home.programs.terminal.shell.zsh.sourceRoot`（即 `config/home`）+ `mkOutOfStoreSymlink` 引用，便于直接编辑仓库文件。
-4. **Darwin / NixOS 模块**若需部署 home 文件，用 `home-manager.users.<name>`，文件源仍指向 `config/home/...`，使用 `lib.file.getFile`：
+3. **Home 模块**优先通过 `dot.home.programs.terminal.shell.zsh.sourceRoot`（即 `config/home`）+ `mkOutOfStoreSymlink` 引用，直接软链接到项目文件，编辑即时生效、无需 rebuild。
+4. **Darwin / NixOS 模块**若需部署 home 文件，用 `home-manager.users.<name>`，在子模块里用 `config.lib.file.mkOutOfStoreSymlink (lib.file.getFile "config/home/...")`：
 
 ```nix
-home-manager.users.${config.dot.darwin.user.name}.xdg.configFile."karabiner/karabiner.json".source =
-  lib.file.getFile "config/home/.config/karabiner/karabiner.json";
+home-manager.users.${config.dot.darwin.user.name} = { config, ... }: {
+  xdg.configFile."karabiner/karabiner.json".source =
+    config.lib.file.mkOutOfStoreSymlink (lib.file.getFile "config/home/.config/karabiner/karabiner.json");
+};
 ```
+
+> **软链接机制**：`lib.file.getFile` 返回仓库真实路径（根路径唯一集中在 `lib/file/default.nix` 的 `repoRoot`），`mkOutOfStoreSymlink` 生成指向该路径的链接。纯求值下 Nix 无法自动得知仓库位置（`self` 是 store 快照、`builtins.getEnv` 纯求值为空），所以必须集中定义一次；换机器或移动仓库只改 `repoRoot` 一处。
+>
+> **不要**把 `lib.file.getFile` 的结果直接作为 `source`（Home Manager 会经 `builtins.path` 复制进 store，变成只读副本，编辑需 rebuild）。
 
 5. 只有生成逻辑本身就是 Nix（小 attrset → `builtins.toJSON`）时，才可以不落静态文件；大映射表、上游导出的完整配置优先作为 `config/home/` 静态文件管理。

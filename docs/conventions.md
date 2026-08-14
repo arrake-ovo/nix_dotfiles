@@ -55,5 +55,12 @@
 - 应用/工具的静态配置文件放 `config/`，**不要**和 `modules/**/default.nix` 放在同一目录。
 - 映射到用户 home 的文件放 `config/home/`，路径镜像 `$HOME`：  
   `~/.config/foo/bar` → `config/home/.config/foo/bar`。
-- 模块通过 `lib.file.getFile "config/home/..."` 或 `sourceRoot` + `mkOutOfStoreSymlink` 引用。
+- **`config/home/` 下的所有配置都直接软链接到项目文件**（`lib.file.getFile` + `mkOutOfStoreSymlink`）：修改项目文件即时生效，**无需 rebuild**。
+- **优先使用软件原生配置文件**（json/toml/kdl/yaml 等，放 `config/home/` 镜像 `$HOME`），**不要用 Nix 模块的 settings 等 option 生成配置**；只有软件没有独立配置文件可循时才考虑生成式。
+  - 符合此原则：zsh（.zshrc）、yazi（toml/lua）、karabiner（json）、squirrel（Rime）、zellij（kdl）等。
+  - 反例：`programs.git.settings`、`programs.starship.settings` 这类把配置写死在 Nix 里的做法（修改需 rebuild，且偏离软件原生格式）。
+  - `lib.file.getFile` 返回仓库真实路径，仓库根路径唯一集中在 `lib/file/default.nix` 的 `repoRoot`；换机器或移动仓库只改这一处。
+  - Home 模块示例：`sourceRoot = lib.file.getFile "config/home"`，再 `mkOutOfStoreSymlink "${sourceRoot}/..."`。
+  - Darwin / NixOS 模块在 `home-manager.users.<name>` 子模块里用 `config.lib.file.mkOutOfStoreSymlink (lib.file.getFile "config/home/...")`。
+- 不要直接拿 `lib.file.getFile` 的结果作为 `home.file`/`xdg.configFile` 的 `source`（HM 会复制进 store，变成只读副本）；必须经过 `mkOutOfStoreSymlink`。
 - 细节与示例见 [architecture/02-module-system.md](architecture/02-module-system.md)「第六步：静态配置文件放 config/」。
