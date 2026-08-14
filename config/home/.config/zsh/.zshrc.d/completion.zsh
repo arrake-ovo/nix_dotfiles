@@ -1,7 +1,8 @@
 # 补全样式（compinit 初始化由 ez-compinit 插件负责）
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' menu select
+# fzf-tab 要求关闭原生菜单，否则会抢走 Tab 补全（fzf-tab 无法接管）
+zstyle ':completion:*' menu no
 zstyle ':completion:*' list-dirs-first true
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' rehash true
