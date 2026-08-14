@@ -1,0 +1,31 @@
+# herdr — AI coding agent 的终端复用器
+# 习惯对齐：
+#   - Dracula 主题（同 fzf / fzf-tab 的配色）
+#   - 方向键导航 pane（Colemak 布局友好，避开 hjkl 分散：j→y, k→m, l→u）
+#   - zsh + login shell（确保 homebrew PATH 在 pane 里生效）
+
+# 跳过首次引导
+onboarding = false
+
+[theme]
+name = "dracula"
+
+[terminal]
+default_shell = "zsh"
+# macOS 上 login shell 会跑 path_helper + homebrew 初始化，pane 里 PATH 才完整
+shell_mode = "auto"
+
+[keys]
+# prefix 保持 ctrl+b（Colemak 下 b 位置不变，食指按 b + 小指按 Ctrl，分工自然）
+prefix = "ctrl+b"
+
+# navigate mode 的 pane 导航：方向键
+# 注意：herdr 已内置 left/right 方向键为 navigate_pane 的 alias，这里补 up/down
+navigate_pane_up = "up"
+navigate_pane_down = "down"
+
+# prefix + 方向键：切换 pane 焦点（Colemak 下用方向键而非 hjkl）
+focus_pane_left = "prefix+left"
+focus_pane_down = "prefix+down"
+focus_pane_up = "prefix+up"
+focus_pane_right = "prefix+right"
