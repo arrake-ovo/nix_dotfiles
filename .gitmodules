@@ -1,0 +1,4 @@
+[submodule "config/home/.config/nvim"]
+	path = config/home/.config/nvim
+	url = https://github.com/arrake-ovo/nvim.git
+	branch = dev
