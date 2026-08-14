@@ -16,7 +16,10 @@ in
 
     # Karabiner 仅运行在 macOS；安装与部署同属 Darwin 模块。
     # 静态配置文件放在 config/home/，不与 default.nix 同目录。
-    home-manager.users.${user}.xdg.configFile."karabiner/karabiner.json".source =
-      lib.file.getFile "config/home/.config/karabiner/karabiner.json";
+    # mkOutOfStoreSymlink 直接软链接到项目文件：改 karabiner.json 即时生效，无需 rebuild。
+    home-manager.users.${user} = { config, ... }: {
+      xdg.configFile."karabiner/karabiner.json".source =
+        config.lib.file.mkOutOfStoreSymlink (lib.file.getFile "config/home/.config/karabiner/karabiner.json");
+    };
   };
 }

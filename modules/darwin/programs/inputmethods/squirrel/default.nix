@@ -4,8 +4,8 @@ let
   inherit (lib) mkIf mkEnableOption;
 
   cfg = config.dot.darwin.programs.inputmethods.squirrel;
-in
-{
+  user = config.dot.darwin.user.name;
+in {
   options.dot.darwin.programs.inputmethods.squirrel = {
     enable = mkEnableOption "Squirrel (鼠须管) Rime 输入法";
   };
@@ -13,14 +13,12 @@ in
   config = mkIf cfg.enable {
     homebrew.casks = [ "squirrel-app" ];
 
-    # Rime 配置 —— 从独立 git 仓库按需拉取
-    # 固定 rev 确保纯函数求值和缓存
-    home-manager.users.${config.dot.darwin.user.name}.home.file."Library/Rime" = {
-      source = builtins.fetchGit {
-        url = "https://github.com/arrake0101/rime.git";
-        rev = "c05ddd1136b4ec29cc6d34280efc8ba3aba91ec5";
-      };
-      recursive = true;
+    # 静态配置文件放在 config/home/，镜像 $HOME，不与 default.nix 同目录。
+    # mkOutOfStoreSymlink 直接软链接到项目目录：改项目文件即时生效，无需 rebuild；
+    # ~/Library/Rime 整体可写，Rime 的 build/、userdb 等运行产物直接落在项目目录里。
+    home-manager.users.${user} = { config, ... }: {
+      home.file."Library/Rime".source =
+        config.lib.file.mkOutOfStoreSymlink (lib.file.getFile "config/home/Library/Rime");
     };
   };
 }

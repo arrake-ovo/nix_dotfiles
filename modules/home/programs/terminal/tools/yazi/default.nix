@@ -19,14 +19,14 @@ in
       enable = true;
 
       plugins = {
-        git = pluginPath "git";
-        keyjump = pluginPath "keyjump";
-        compress = pluginPath "compress";
-        smart-enter = pluginPath "smart-enter";
-        yamb = pluginPath "yamb";
-        githead = pluginPath "githead";
-        starship = pluginPath "starship";
-        yaziline = pluginPath "yaziline";
+        git = outOfStore (pluginPath "git");
+        keyjump = outOfStore (pluginPath "keyjump");
+        compress = outOfStore (pluginPath "compress");
+        smart-enter = outOfStore (pluginPath "smart-enter");
+        yamb = outOfStore (pluginPath "yamb");
+        githead = outOfStore (pluginPath "githead");
+        starship = outOfStore (pluginPath "starship");
+        yaziline = outOfStore (pluginPath "yaziline");
       };
     };
 
@@ -36,6 +36,7 @@ in
       "yazi/keymap.toml".source = outOfStore "${sourceRoot}/.config/yazi/keymap.toml";
       "yazi/theme.toml".source = outOfStore "${sourceRoot}/.config/yazi/theme.toml";
       "yazi/starship.toml".source = outOfStore "${sourceRoot}/.config/yazi/starship.toml";
+      "yazi/package.toml".source = outOfStore "${sourceRoot}/.config/yazi/package.toml";
       "yazi/flavors".source = outOfStore "${sourceRoot}/.config/yazi/flavors";
     };
   };

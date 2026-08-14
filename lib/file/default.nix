@@ -23,6 +23,12 @@ let
   listNamesMatching = predicate: dirPath: lib.filter predicate (listNames dirPath);
   getNixFiles = dirPath: listNamesMatching (name: hasSuffix ".nix" name) dirPath;
   mergeAttrs = attrsList: lib.foldl' (acc: attrs: acc // attrs) { } attrsList;
+
+  # 仓库根目录的真实路径。
+  # 纯求值下 Nix 无法得知仓库的真实位置（flake 的 self 是 nix store 里的只读快照，
+  # builtins.getEnv 在纯求值下返回空），因此集中在此定义一次。
+  # 换机器或移动仓库时只需修改这一处。
+  repoRoot = "/Users/arrake/nix/nix_dotfiles";
 in
 {
   inherit
@@ -34,7 +40,9 @@ in
     mergeAttrs
     ;
 
-  getFile = relativePath: self + "/${relativePath}";
+  # config/home 下的配置统一经此函数 + mkOutOfStoreSymlink 直接软链接到项目文件：
+  # 修改项目文件即时生效，无需 rebuild。返回的是真实路径（非 store 副本）。
+  getFile = relativePath: "${repoRoot}/${relativePath}";
   pathExists = filePath: builtins.pathExists filePath;
   safeImport = filePath: default: if builtins.pathExists filePath then import filePath else default;
 
