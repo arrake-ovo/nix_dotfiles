@@ -21,6 +21,9 @@ in
         inputmethods.squirrel = mkDefault enabled;
 
         graphical.apps = {
+          # AeroSpace：macOS 专属平铺窗口管理器（cask 安装 + config/home 软链接）
+          aerospace = mkDefault enabled;
+
           chrome = mkDefault enabled;
           alt-tab = mkDefault enabled;
           # keyclu = mkDefault enabled;
@@ -39,8 +42,6 @@ in
           rio = mkDefault enabled;
         };
       };
-
-      
     };
   };
 }

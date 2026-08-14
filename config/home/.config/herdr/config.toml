@@ -2,7 +2,8 @@
 # 习惯对齐：
 #   - Dracula 主题（同 fzf / fzf-tab 配色）
 #   - zsh + login shell（homebrew PATH 完整）
-#   - Colemak 键盘布局：方向导航用 neui（n=左 e=下 u=上 i=右，同 nvim colemak.lua）
+#   - Colemak 键盘布局：方向统一用 neui（n=左 e=下 u=上 i=右，同 nvim colemak.lua）
+#   - neui 分层：裸键=聚焦 pane，shift=交换 pane，ctrl=切 tab
 
 # 跳过首次引导
 onboarding = false
@@ -34,8 +35,8 @@ detach = "prefix+q"
 
 # ===== workspace（工作区）=====
 
-# 新建 workspace
-new_workspace = "prefix+ctrl+n"
+# 新建 workspace（C = Create；原默认 shift+n 让给 swap_pane_left）
+new_workspace = "prefix+shift+c"
 # 从选中 workspace 新建 git worktree
 new_worktree = "prefix+shift+g"
 # 重命名选中的 workspace
@@ -46,25 +47,29 @@ close_workspace = "prefix+shift+d"
 workspace_picker = "prefix+w"
 # 打开会话导航器（跳转任意 session/pane）
 goto = "prefix+g"
-# navigate mode 里 workspace 选择上移
+# navigate mode 里 workspace 选择上移（方向键，不占 neui）
 navigate_workspace_up = "up"
 # navigate mode 里 workspace 选择下移
 navigate_workspace_down = "down"
 
 # ===== tab（标签页）=====
 
-# 在当前 workspace 新建 tab
-new_tab = "prefix+c"
+# 在当前 workspace 新建 tab（t = tab）
+new_tab = "prefix+t"
 # 重命名当前 tab
 rename_tab = "prefix+shift+t"
-# 切换到上一个 tab
-previous_tab = "prefix+p"
-# 切换到下一个 tab
-next_tab = "prefix+ctrl+p"
+# 切换到上一个 tab（ctrl+n：n=左方向=前一个）
+previous_tab = "prefix+ctrl+n"
+# 切换到下一个 tab（ctrl+i：i=右方向=后一个）
+next_tab = "prefix+ctrl+i"
 # 跳到第 1-9 个 tab
 switch_tab = "prefix+1..9"
 # 关闭当前 tab
 close_tab = "prefix+shift+x"
+# 把当前 tab 左移（调换 tab 顺序）
+move_tab_previous = "prefix+shift+["
+# 把当前 tab 右移
+move_tab_next = "prefix+shift+]"
 
 # ===== pane 导航（Colemak neui：n=左 e=下 u=上 i=右）=====
 
@@ -76,7 +81,7 @@ navigate_pane_down = "e"
 navigate_pane_up = "u"
 # navigate mode 里聚焦右 pane
 navigate_pane_right = "i"
-# 聚焦左 pane
+# 聚焦左 pane（裸 neui）
 focus_pane_left = "prefix+n"
 # 聚焦下 pane
 focus_pane_down = "prefix+e"
@@ -88,6 +93,8 @@ focus_pane_right = "prefix+i"
 cycle_pane_next = "prefix+tab"
 # 循环聚焦上一个 pane
 cycle_pane_previous = "prefix+shift+tab"
+# 回到上一个聚焦的 pane（跨 tab/workspace，类似 tmux 的 prefix+;）
+last_pane = "prefix+;"
 
 # ===== 分屏（类比 nvim：s = split；herdr 仅支持右/下两方向）=====
 
@@ -115,18 +122,18 @@ close_pane = "prefix+x"
 zoom = "prefix+z"
 # 重命名当前 pane
 rename_pane = "prefix+shift+p"
-# 进入 resize 模式（用方向键调整 pane 大小）
+# 进入 resize 模式（resize 方向硬编码 hjkl + 方向键，Colemak 下用方向键）
 resize_mode = "prefix+r"
 
 # ===== 其他 =====
 
 # 用 $EDITOR 打开当前 pane 的 scrollback
 edit_scrollback = "prefix+ctrl+e"
-# 进入 copy mode（键盘选择并复制文本）
+# 进入 copy mode（键盘选择并复制文本，方向键/hjkl 移动）
 copy_mode = "prefix+["
 # 折叠/展开 sidebar
 toggle_sidebar = "prefix+b"
 # 聚焦当前可见的通知目标
 open_notification_target = "prefix+o"
-# 把剪贴板图片粘贴到远程 herdr 会话（直接 chord，无 prefix）
-remote_image_paste = "ctrl+v"
+# 剪贴板图片粘贴（禁用，避免与 zsh 的 ctrl+v edit-command-line 冲突）
+remote_image_paste = ""
