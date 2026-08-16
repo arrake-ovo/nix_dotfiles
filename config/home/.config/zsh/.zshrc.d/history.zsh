@@ -3,6 +3,8 @@
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history
+# zsh 不会自动创建 HISTFILE 的父目录，必须手动建，否则历史无法跨会话持久化
+[[ -d ${HISTFILE:h} ]] || mkdir -p ${HISTFILE:h}
 
 setopt EXTENDED_HISTORY      # 带时间戳
 setopt HIST_IGNORE_ALL_DUPS  # 全部去重
