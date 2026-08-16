@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib) mkEnableOption mkIf mkOption types listToAttrs nameValuePair;
   cfg = config.dot.home.programs.terminal.shell.zsh;
 
   outOfStore = config.lib.file.mkOutOfStoreSymlink;
@@ -10,6 +10,27 @@ let
     source = outOfStore "${cfg.sourceRoot}/${path}";
     recursive = true;
   };
+
+  # .zshrc.d 里「始终加载」的基础脚本。
+  # 按需脚本（如 ime.zsh）不在此列，由各自模块用 home.file 条件软链，
+  # 实现「未启用对应软件就不链接对应脚本」。
+  baseScripts = [
+    "aliases.zsh"
+    "completion.zsh"
+    "fnm.zsh"
+    "fzf-tab.zsh"
+    "fzf.zsh"
+    "history.zsh"
+    "keybindings.zsh"
+    "prompt.zsh"
+    "setopt.zsh"
+  ];
+
+  rcD = listToAttrs (map (f:
+    nameValuePair ".config/zsh/.zshrc.d/${f}" {
+      source = cfgFile ".config/zsh/.zshrc.d/${f}";
+    }
+  ) baseScripts);
 in {
   options.dot.home.programs.terminal.shell.zsh = {
     enable = mkEnableOption "zsh";
@@ -33,7 +54,10 @@ in {
       # ~/.zshenv 必须位于 $HOME（zsh 只在 $HOME 找它）；它设置 ZDOTDIR 后，
       # 其余配置（.zshrc / .zsh_plugins.txt / .zshrc.d / bin）都从 ~/.config/zsh 读取。
       ".zshenv".source = cfgFile ".zshenv";
-      ".config/zsh" = cfgDir ".config/zsh";
+      ".config/zsh/.zshrc".source = cfgFile ".config/zsh/.zshrc";
+      ".config/zsh/.zsh_plugins.txt".source = cfgFile ".config/zsh/.zsh_plugins.txt";
+      ".config/zsh/bin" = cfgDir ".config/zsh/bin";
+      # .zshrc.d 逐文件软链（见 rcD），不含按需脚本，便于其他模块条件补充。
 
       # antidote 包没有 bin，只有 share/antidote/antidote.zsh；
       # 链接到固定位置供 .zshrc source（antidote.zsh 依赖同目录的 functions/）。
@@ -41,6 +65,6 @@ in {
         source = "${pkgs.antidote}/share/antidote";
         recursive = true;
       };
-    };
+    } // rcD;
   };
 }

@@ -10,10 +10,10 @@ alias g='git'
 # mkcd：建目录并进入
 mkcd() { mkdir -p "$1" && cd "$1"; }
 
-# yazi：退出后 cd 到 yazi 所在目录（ime-e 让进入时切英文、退出恢复输入法）
+# yazi：退出后 cd 到 yazi 所在目录（输入法切换由 ime.zsh 的 preexec hook 自动处理）
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
-  ime-e yazi "$@" --cwd-file="$tmp"
+  yazi "$@" --cwd-file="$tmp"
   if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
     builtin cd -- "$cwd"
   fi

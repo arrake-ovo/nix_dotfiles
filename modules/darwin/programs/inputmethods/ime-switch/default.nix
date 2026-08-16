@@ -15,7 +15,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    # 安装 macism CLI 到用户 home，供 zsh 的 ime-e 包装函数调用
-    home-manager.users.${user}.home.packages = [ macism ];
+    home-manager.users.${user} = { config, ... }: {
+      # 安装 macism CLI，供 zsh 的 ime.zsh（preexec/precmd hook）调用
+      home.packages = [ macism ];
+
+      # zsh 脚本按需软链：只有启用本模块才链接 ime.zsh
+      home.file.".config/zsh/.zshrc.d/ime.zsh".source =
+        config.lib.file.mkOutOfStoreSymlink (lib.file.getFile "config/home/.config/zsh/.zshrc.d/ime.zsh");
+    };
   };
 }
