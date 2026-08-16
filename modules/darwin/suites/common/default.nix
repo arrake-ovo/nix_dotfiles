@@ -35,6 +35,7 @@ in
           # stats = mkDefault enabled;
           aldente = mkDefault enabled;
           obsidian = mkDefault enabled;
+          zotero = mkDefault enabled;
         };
 
         terminal.emulators = {
