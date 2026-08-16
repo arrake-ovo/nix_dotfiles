@@ -45,6 +45,11 @@ in
           SuccessfulExit = false;
         };
         ProcessType = "Background";
+        # launchd 不继承用户 shell 的 locale（ghostty 里是 en_US.UTF-8），
+        # 导致 herdr pane 里 git 等命令落到系统 zh_CN 输出中文；显式设为英文。
+        EnvironmentVariables = {
+          LANG = "en_US.UTF-8";
+        };
         StandardOutPath = "${config.home.homeDirectory}/Library/Logs/herdr/server.log";
         StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/herdr/server.log";
       };
