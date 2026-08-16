@@ -19,6 +19,7 @@ in
 
       programs = {
         inputmethods.squirrel = mkDefault enabled;
+        inputmethods.ime-switch = mkDefault enabled;
 
         graphical.apps = {
           # AeroSpace：macOS 专属平铺窗口管理器（cask 安装 + config/home 软链接）

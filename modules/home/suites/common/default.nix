@@ -25,7 +25,6 @@ in
           git = mkDefault enabled;
           gh = mkDefault enabled;
           herdr = mkDefault enabled;
-          ime-switch = mkDefault enabled;
           opencli = mkDefault enabled;
           starship = mkDefault enabled;
           yazi = mkDefault enabled;

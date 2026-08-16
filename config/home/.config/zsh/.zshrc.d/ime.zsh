@@ -1,5 +1,5 @@
 # 输入法自动切换：进入 TUI 程序时切英文，退出恢复原输入法
-# 依赖 macism（nixpkgs-unstable，见 modules/home/programs/terminal/tools/ime-switch）
+# 依赖 macism（nixpkgs-unstable，见 modules/darwin/programs/inputmethods/ime-switch）
 
 # 英文输入源 ID（ABC 键盘布局）。可用 `macism` 查看当前、`macism <id>` 切换。
 _IME_ENGLISH_ID="${IME_ENGLISH_ID:-com.apple.keylayout.ABC}"
