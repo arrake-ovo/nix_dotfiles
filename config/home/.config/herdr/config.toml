@@ -134,3 +134,15 @@ toggle_sidebar = "prefix+b"
 open_notification_target = "prefix+o"
 # 剪贴板图片粘贴（禁用，避免与 zsh 的 ctrl+v edit-command-line 冲突）
 remote_image_paste = ""
+
+# ===== 实验性：IME / 中文输入支持 =====
+[experimental]
+# prefix 模式期间临时切到 ASCII 输入源，避免 ctrl+b 被中文输入法吞掉
+switch_ascii_input_source_in_prefix = true
+# agent TUI（pi/claude/codex）隐藏光标时仍暴露光标锚点，让 macOS 候选框跟随
+reveal_hidden_cursor_for_cjk_ime = true
+# 可选白名单：只在列出的 agent pane 暴露光标，避免 vim normal 等场景多出光标。
+# 留空 = 对所有 pane 生效。可选值：pi, claude, codex, gemini, cursor, devin, cline,
+# opencode, copilot, kimi, kiro, droid, amp, grok, hermes, kilo, qodercli, qoder, qwen,
+# qwen-code, maki
+# cjk_ime_agents = ["pi", "claude", "codex"]
