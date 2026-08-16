@@ -1,5 +1,5 @@
 # =============================================================================
-# AeroSpace 试用配置 · Colemak 版（本地，未接入 Nix）
+# AeroSpace 配置 · Colemak 版（已接入 Nix）
 # 路径: ~/.config/aerospace/aerospace.toml
 #
 # 文档: https://nikitabobko.github.io/AeroSpace/guide
@@ -14,10 +14,10 @@
 #
 # 导航不用 HJKL（那是 QWERTY vim），改用 Colemak 右手原位：
 #
-#              E (上)
-#          H   N   I     ←  left / down / right
+#              U (上)
+#          N   E   I     ←  left / down / right
 #
-# 即: h=左  n=下  e=上  i=右   （HNEI）
+# 即: n=左  e=下  i=右  u=上   （NEIU）
 # =============================================================================
 
 after-login-command = []
@@ -45,7 +45,7 @@ automatically-unhide-macos-hidden-apps = false
 
 # 关键：Colemak 键位映射
 [key-mapping]
-preset = 'colemak'
+preset = 'qwerty'
 
 # sketchybar 高度约 36，顶部留空
 [gaps]
@@ -54,19 +54,19 @@ inner.vertical = 8
 outer.left = 8
 outer.bottom = 8
 outer.right = 8
-outer.top = 40
+outer.top = 5
 
 # =============================================================================
 # main · 日常模式
 # =============================================================================
 [mode.main.binding]
 
-# ── 焦点 HNEI ───────────────────────────────────────────────────────────────
-#        E
-#    H   N   I
-alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
-alt-n = 'focus --boundaries-action wrap-around-the-workspace down'
-alt-e = 'focus --boundaries-action wrap-around-the-workspace up'
+# ── 焦点 NEIU ───────────────────────────────────────────────────────────────
+#        U
+#    N   E   I
+alt-n = 'focus --boundaries-action wrap-around-the-workspace left'
+alt-e = 'focus --boundaries-action wrap-around-the-workspace down'
+alt-u = 'focus --boundaries-action wrap-around-the-workspace up'
 alt-i = 'focus --boundaries-action wrap-around-the-workspace right'
 
 # 方向键兜底（键位无关）
@@ -75,10 +75,10 @@ alt-down = 'focus --boundaries-action wrap-around-the-workspace down'
 alt-up = 'focus --boundaries-action wrap-around-the-workspace up'
 alt-right = 'focus --boundaries-action wrap-around-the-workspace right'
 
-# ── 移动窗口 HNEI ───────────────────────────────────────────────────────────
-alt-shift-h = 'move left'
-alt-shift-n = 'move down'
-alt-shift-e = 'move up'
+# ── 移动窗口 NEIU ───────────────────────────────────────────────────────────
+alt-shift-n = 'move left'
+alt-shift-e = 'move down'
+alt-shift-u = 'move up'
 alt-shift-i = 'move right'
 
 alt-shift-left = 'move left'
@@ -98,7 +98,7 @@ alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 
 # 上一个 / 下一个工作区
-# （不用 n，n 已用于向下焦点）
+# （不用 n，n 已用于向左焦点）
 alt-p = 'workspace --wrap-around prev'
 alt-y = 'workspace --wrap-around next'
 
@@ -132,7 +132,7 @@ alt-slash = 'layout tiles horizontal vertical'
 alt-period = 'layout accordion horizontal vertical'
 # 当前窗口 浮动 ↔ 平铺
 alt-shift-space = 'layout floating tiling'
-# 平衡窗口大小（b = balance；e 已用于向上）
+# 平衡窗口大小（b = balance；e 已用于向下）
 alt-b = 'balance-sizes'
 
 # ── 全屏 / 关闭 ─────────────────────────────────────────────────────────────
@@ -149,9 +149,9 @@ alt-equal = 'resize smart +50'
 
 # ── 合并容器（进阶）─────────────────────────────────────────────────────────
 # 与某方向邻居加入同一父容器
-ctrl-alt-h = 'join-with left'
-ctrl-alt-n = 'join-with down'
-ctrl-alt-e = 'join-with up'
+ctrl-alt-n = 'join-with left'
+ctrl-alt-e = 'join-with down'
+ctrl-alt-u = 'join-with up'
 ctrl-alt-i = 'join-with right'
 
 # ── 启动 ────────────────────────────────────────────────────────────────────
@@ -168,15 +168,15 @@ alt-shift-o = 'mode service'
 # resize · 调大小（alt-r 进入，esc 回 main）
 # =============================================================================
 [mode.resize.binding]
-# 同样 HNEI
-h = 'resize width -50'
-n = 'resize height +50'
-e = 'resize height -50'
+# 同样 NEIU
+n = 'resize width -50'
+e = 'resize height +50'
+u = 'resize height -50'
 i = 'resize width +50'
 
-shift-h = 'resize width -10'
-shift-n = 'resize height +10'
-shift-e = 'resize height -10'
+shift-n = 'resize width -10'
+shift-e = 'resize height +10'
+shift-u = 'resize height -10'
 shift-i = 'resize width +10'
 
 minus = 'resize smart -50'
