@@ -52,12 +52,12 @@ goto = "prefix+g"
 navigate_workspace_up = "up"
 # navigate mode 里 workspace 选择下移
 navigate_workspace_down = "down"
-# 切换到上一个 workspace（super=⌘ + 上方向 u）
-previous_workspace = "prefix+super+u"
-# 切换到下一个 workspace（⌘ + 下方向 e）
-next_workspace = "prefix+super+e"
-# 直接跳到第 1-9 个 workspace（⌘ + 数字）
-switch_workspace = "prefix+super+1..9"
+# 切换到上一个 workspace（方向键上）
+previous_workspace = "prefix+up"
+# 切换到下一个 workspace（方向键下）
+next_workspace = "prefix+down"
+# 直接跳到第 1-9 个 workspace（shift+数字，与 tab 的裸数字区分）
+switch_workspace = "prefix+shift+1..9"
 
 # ===== tab（标签页）=====
 
