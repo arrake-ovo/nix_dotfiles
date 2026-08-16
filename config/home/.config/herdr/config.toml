@@ -15,8 +15,9 @@ name = "dracula"
 [terminal]
 # 新 pane 默认 shell
 default_shell = "zsh"
-# macOS 上 login shell 会跑 path_helper + homebrew 初始化，pane 里 PATH 才完整
-shell_mode = "auto"
+# macOS 上 login shell 会跑 path_helper + homebrew + ~/.zprofile 初始化，pane 里 PATH 才完整
+# （auto 实测没读 ~/.zprofile，导致缺 .pi/agent/bin、.npm-global/bin 等，故显式 login）
+shell_mode = "login"
 
 [keys]
 # 前缀键：按下后进入 prefix 模式，下一个键交给 herdr 而非 pane 内程序
