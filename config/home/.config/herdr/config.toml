@@ -74,6 +74,13 @@ switch_tab = "prefix+1..9"
 # 关闭当前 tab
 close_tab = "prefix+shift+x"
 
+# ===== agent（AI 编码 agent pane）=====
+
+# 循环切换到下一个 agent（a = agent）
+next_agent = "prefix+a"
+# 循环切换到上一个 agent（shift+a = 反向，同 cycle_pane_previous 用 shift 反向）
+previous_agent = "prefix+shift+a"
+
 # ===== pane 导航（Colemak neui：n=左 e=下 u=上 i=右）=====
 
 # navigate mode 里聚焦左 pane
