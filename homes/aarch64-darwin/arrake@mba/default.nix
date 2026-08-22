@@ -27,4 +27,7 @@ in {
 
   # fnm：node 版本管理（按项目 .nvmrc 自动切换；与 Nix nodejs_22 并存）
   dot.home.programs.development.languages.fnm.enable = true;
+
+  # android 套件：adb（android-tools）+ scrcpy（投屏），跨平台软件
+  dot.home.suites.android.enable = true;
 }
