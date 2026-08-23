@@ -5,8 +5,7 @@ let
   inherit (lib) enabled;
 
   cfg = config.dot.darwin.suites.common;
-in
-{
+in {
   options.dot.darwin.suites.common = {
     enable = lib.mkEnableOption "common darwin suite";
   };
@@ -36,6 +35,8 @@ in
           aldente = mkDefault enabled;
           obsidian = mkDefault enabled;
           zotero = mkDefault enabled;
+          # Grok Bot：xAI 桌面 agent（cask 自更新，brew 只负责首次安装）
+          grok-bot = mkDefault enabled;
         };
 
         terminal.emulators = {

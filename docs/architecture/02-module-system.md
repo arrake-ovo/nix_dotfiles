@@ -369,6 +369,7 @@ read ~/nix/khanelinix/modules/home/programs/.../default.nix
 |------|------|
 | shell | `modules/home/programs/terminal/shell/<name>/` |
 | 终端工具 | `modules/home/programs/terminal/tools/<name>/` |
+| AI agent 工具 | `modules/home/programs/agent/<name>/` |
 | 编辑器 | `modules/home/programs/editors/<name>/` |
 | 开发语言工具链 | `modules/home/programs/development/languages/<name>/` |
 | 开发平台工具 | `modules/home/programs/development/tools/<name>/` |

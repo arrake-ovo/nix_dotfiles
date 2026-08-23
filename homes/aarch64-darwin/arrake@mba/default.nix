@@ -30,4 +30,13 @@ in {
 
   # android 套件：adb（android-tools）+ scrcpy（投屏），跨平台软件
   dot.home.suites.android.enable = true;
+
+  # AI agent 工具（numtide/llm-agents.nix，每日自动更新版本）：
+  # grok-build（xAI）+ opencode（SST 开源）+ pi-coding-agent
+  dot.home.programs.agent.grok-build.enable = true;
+  dot.home.programs.agent.opencode.enable = true;
+  dot.home.programs.agent.pi.enable = true;
+
+  # 用户级 nix 客户端配置：声明 numtide binary cache 信任
+  dot.home.programs.development.tools.nix.enable = true;
 }
