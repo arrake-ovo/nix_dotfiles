@@ -1,0 +1,37 @@
+# 词	音节	词频
+# 从 Rime custom_phrase_double.txt 迁出。音节用全拼（空格分音节），青简按当前双拼方案解码按键。
+有	you	3
+又	you	2
+由	you	1
+一	yi	4
+以	yi	3
+已	yi	2
+亦	yi	1
+可以	ke yi	90
+什么	shen me	90
+怎么说	zen me shuo	90
+怎么样	zen me yang	90
+怎么	zen me	90
+为什么	wei shen me	90
+这个	zhe ge	90
+那个	na ge	90
+没有	mei you	90
+知道	zhi dao	90
+觉得	jue de	90
+现在	xian zai	90
+因为	yin wei	90
+所以	suo yi	90
+但是	dan shi	90
+然后	ran hou	90
+我们	wo men	90
+他们	ta men	90
+你们	ni men	90
+一个	yi ge	90
+应该	ying gai	90
+一下	yi xia	90
+一样	yi yang	90
+有个	you ge	90
+是一个	shi yi ge	90
+有一个	you yi ge	90
+有没有	you mei you	90
+了	le	99

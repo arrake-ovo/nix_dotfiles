@@ -1,0 +1,257 @@
+# 青简输入法配置。保存后自动生效。
+# 从鼠须管 Rime（colemak_custom_mspy）迁过来。双拼用编译进引擎的 colemak_mspy，
+# 不是内置 microsoft（那是标准微软，你好=nihk；本方案你好=nihf）。
+
+[general]
+learning_language = "en"
+# Rime default.yaml menu.page_size
+page_size = 4
+# 与 Rime default.yaml 一致：minus 上一页、equal 下一页（+ 是 shift+=，青简翻页认 =）
+page_keys = "-="
+theme = "system"
+# Rime squirrel.yaml candidate_list_layout: linear
+layout = "horizontal"
+# Rime squirrel.yaml inline_preedit: true
+preedit = "both"
+english_candidates = true
+# Rime ascii_punct reset: 1 → 中文状态默认英文标点
+full_width_punctuation = false
+english_full_width_punctuation = false
+shuangpin = "colemak_mspy"
+log_level = "info"
+input_log = true
+
+[shortcut]
+expression = "v"
+question = "u"
+translation = "option"
+translation_second = "shift+option"
+translate_selection = "control+option+t"
+delete_candidate = "shift"
+
+[fuzzy]
+z_zh = false
+c_ch = false
+s_sh = false
+n_l = false
+f_h = false
+l_r = false
+an_ang = false
+en_eng = false
+in_ing = false
+
+[apps]
+# 对齐 squirrel.yaml app_options 里 ascii_mode 的终端 / 编辑器：英文模式不弹候选
+english_candidates_off = [
+  "com.apple.Terminal",
+  "com.googlecode.iterm2",
+  "dev.warp.Warp-Stable",
+  "com.mitchellh.ghostty",
+  "io.alacritty",
+  "net.kovidgoyal.kitty",
+  "com.microsoft.VSCode",
+  "com.todesktop.230313mzl4w4u92",
+  "dev.zed.Zed",
+  "com.jetbrains.*",
+  "org.vim.MacVim",
+  "com.sublimetext.*",
+  "com.apple.dt.Xcode",
+  "com.neovide.neovide",
+]
+
+[dictionaries]
+domains = ["idioms"]
+disabled = []
+
+[model]
+enabled = true
+
+[predict]
+enabled = true
+base_url = "https://api.deepseek.com"
+model = "deepseek-v4-flash"
+reasoning_effort = "none"
+api_key_env = "QINGJIAN_API_KEY"
+timeout_ms = 5000
+debounce_ms = 300
+lookback = 64
+lookahead = 32
+slots = 2
+sentence = true
+
+[status_bar]
+enabled = false
+
+# 自定义短码：敲的是原始字母（不是双拼解码后的拼音）。
+# 从 Rime custom_phrase_double.txt 迁来，并补一批常用简拼。
+# 不用单字母 u/i（和问字/表达式前缀冲突）。同码同位置不能重复。
+
+[[custom_phrases]]
+code = "zm"
+text = "怎么"
+position = 1
+
+[[custom_phrases]]
+code = "zmy"
+text = "怎么样"
+position = 1
+
+[[custom_phrases]]
+code = "zms"
+text = "怎么说"
+position = 1
+
+[[custom_phrases]]
+code = "sm"
+text = "什么"
+position = 1
+
+[[custom_phrases]]
+code = "ky"
+text = "可以"
+position = 1
+
+[[custom_phrases]]
+code = "wsm"
+text = "为什么"
+position = 1
+
+[[custom_phrases]]
+code = "zhg"
+text = "这个"
+position = 1
+
+[[custom_phrases]]
+code = "ng"
+text = "那个"
+position = 1
+
+[[custom_phrases]]
+code = "my"
+text = "没有"
+position = 1
+
+[[custom_phrases]]
+code = "zd"
+text = "知道"
+position = 1
+
+[[custom_phrases]]
+code = "jd"
+text = "觉得"
+position = 1
+
+[[custom_phrases]]
+code = "xz"
+text = "现在"
+position = 1
+
+[[custom_phrases]]
+code = "yw"
+text = "因为"
+position = 1
+
+[[custom_phrases]]
+code = "sy"
+text = "所以"
+position = 1
+
+[[custom_phrases]]
+code = "ds"
+text = "但是"
+position = 1
+
+[[custom_phrases]]
+code = "rh"
+text = "然后"
+position = 1
+
+[[custom_phrases]]
+code = "wm"
+text = "我们"
+position = 1
+
+[[custom_phrases]]
+code = "tm"
+text = "他们"
+position = 1
+
+[[custom_phrases]]
+code = "nm"
+text = "你们"
+position = 1
+
+[[custom_phrases]]
+code = "yg"
+text = "一个"
+position = 1
+
+[[custom_phrases]]
+code = "yg"
+text = "应该"
+position = 2
+
+[[custom_phrases]]
+code = "yx"
+text = "一下"
+position = 1
+
+[[custom_phrases]]
+code = "yy"
+text = "一样"
+position = 1
+
+[[custom_phrases]]
+code = "ug"
+text = "有个"
+position = 1
+
+[[custom_phrases]]
+code = "sig"
+text = "是一个"
+position = 1
+
+[[custom_phrases]]
+code = "uig"
+text = "有一个"
+position = 1
+
+[[custom_phrases]]
+code = "umu"
+text = "有没有"
+position = 1
+
+[[custom_phrases]]
+code = "ybyb"
+text = "又有"
+position = 1
+
+[[custom_phrases]]
+code = "l"
+text = "了"
+position = 1
+
+[[custom_phrases]]
+code = "gg"
+text = "go"
+position = 1
+
+[[custom_phrases]]
+code = "golang"
+text = "Golang"
+position = 1
+
+[[custom_phrases]]
+code = "todo"
+text = "TODO"
+position = 1
+
+[[custom_phrases]]
+code = "amazon"
+text = "Amazon"
+position = 1
+
+[[custom_phrases]]
+code = "nasa"
+text = "NASA"
+position = 1
