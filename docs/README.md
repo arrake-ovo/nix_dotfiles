@@ -11,6 +11,7 @@
 | [reference.md](reference.md) | khanelinix 架构分析（本地 clone: ~/nix/khanelinix） | 新增模块时，先用 rg/read 搜索本地 khanelinix 对应模块 |
 | [nix-notes/](nix-notes/) | Nix 语言学习笔记：语法、函数、高阶模式 | 遇到不理解的 Nix 写法时查阅 |
 | [TODO.md](TODO.md) | 项目待办清单 | 未做完的事项；做完勾掉 |
+| [青简定制版发布记录](specs/2026-10-16-qingjian-colemak-release.md) | Colemak 微软双拼 fork、编译包与 Nix 配置的关系 | 安装或迁移青简输入法时 |
 
 ## 目录职责
 

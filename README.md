@@ -153,6 +153,12 @@ in
 
 注意：本项目处于命名空间迁移过程中。架构文档使用 `dot.*`，部分现有模块仍可能使用 `arrakenix.*`。修改已有模块时，先跟随该模块当前写法；只有明确做命名空间迁移时，才统一改调用方、模块和文档。
 
+## 青简输入法定制版
+
+本仓库使用的青简是个人定制版，新增与 Rime `colemak_custom_mspy` 对齐的 `colemak_mspy` 双拼方案（`nihf` → 你好）。源码在 [arrake-ovo/qingjian](https://github.com/arrake-ovo/qingjian/tree/codex/colemak-mspy)，Apple Silicon 安装包见 [定制版 Release](https://github.com/arrake-ovo/qingjian/releases/tag/colemak-macos-v0.1.3-colemak.1)。
+
+青简应用仍需手动安装；Nix 管理的是 `config.toml`、自定义短语和输入源注册设置。安装位置、版本区别、校验方法及构建说明见 [青简定制版发布记录](docs/specs/2026-10-16-qingjian-colemak-release.md)。
+
 ## 怎么运行
 
 通用检查：

@@ -4,7 +4,7 @@
 
 ## 青简：按 Rime Colemak 微软双拼改键
 
-已完成。引擎方案在 `~/nix/qingjian`（commit `b7beeaf`），开发包装在 `~/Library/Input Methods/Qingjian.app`。`/Library` 里若还有 pkg 的 0.1.2，两份会互顶，删掉系统那份后切一次输入法即可。
+已完成。引擎方案最初在 `~/nix/qingjian`（commit `b7beeaf`），现已整理为 [个人 fork](https://github.com/arrake-ovo/qingjian/tree/codex/colemak-mspy)，编译包见 [定制版 Release](https://github.com/arrake-ovo/qingjian/releases/tag/colemak-macos-v0.1.3-colemak.1)。安装前需处理 `~/Library` 与 `/Library` 下同 bundle ID 的重复副本，见 [发布记录](specs/2026-10-16-qingjian-colemak-release.md)。
 
 - [x] 给青简加一套自定义双拼 `colemak_mspy`，对齐鼠须管 `config/home/Library/Rime/double_pinyin_mspy.schema.yaml`（`schema.name: colemak_custom_mspy`）。**不要用内置 `microsoft`**：那是标准微软双拼，`ao` 在 `k`，「你好」是 `nihk`。用户方案 `ao` 在 `f`，「你好」是 **`nihf`**。
 
@@ -12,7 +12,7 @@
 
 青简 0.1.2 的 `shuangpin` 只能是空（全拼）或 `xiaohe` / `ziranma` / `microsoft` / `sogou`，键位写死在 `qingjian-core` 的 `shuangpin/table.rs`。config.toml 无法导入 Rime algebra。Karabiner 也不能按「第二键才是韵母」做键位映射。
 
-源码已浅克隆：`~/nix/qingjian`（先不要 `bundle.sh --install`，等明确说可以编译）。
+原开发源码在 `~/nix/qingjian`。本次发布按用户要求重新编译打包，未替换本机正在使用的应用。
 
 ### 动手时
 
