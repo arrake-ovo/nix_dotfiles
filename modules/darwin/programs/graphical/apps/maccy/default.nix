@@ -26,22 +26,28 @@ in
       };
     };
 
-    # 偏好从 system.interface 收拢到本模块；与当前本机常用设置对齐
-    system.defaults.CustomUserPreferences."org.p0deje.Maccy" = {
-      SUAutomaticallyUpdate = false;
-      SUEnableAutomaticChecks = false;
-      SUHasLaunchedBefore = true;
-
-      searchMode = "fuzzy";
-      previewDelay = 150;
-      maxMenuItemLength = 25;
-      menuIcon = "clipboard";
-      pasteByDefault = true;
-      showInStatusBar = false;
-      showSearch = true;
-      showTitle = true;
-      showFooter = true;
-      pinTo = "top";
-    };
+    # Maccy 偏好原本用 system.defaults.CustomUserPreferences 写在 sudo 下会失败：
+    # "Could not write domain /Users/arrake/Library/Containers/org.p0deje.Maccy/.../org.p0deje.Maccy"
+    # （沙盒 app 容器路径 ~/Library/Containers/<bundle>/Data/Library/Preferences/<plist>，
+    #   容器由 arrake 拥有，root 写不进）。
+    # 临时方案：注释掉，darwin-rebuild 激活就能过；偏好改成在 Maccy app 里手动设（一次性）。
+    # TODO 长期方案：挪到 home-manager 层的 home.activation（用户身份 defaults write）。
+    #
+    # system.defaults.CustomUserPreferences."org.p0deje.Maccy" = {
+    #   SUAutomaticallyUpdate = false;
+    #   SUEnableAutomaticChecks = false;
+    #   SUHasLaunchedBefore = true;
+    #
+    #   searchMode = "fuzzy";
+    #   previewDelay = 150;
+    #   maxMenuItemLength = 25;
+    #   menuIcon = "clipboard";
+    #   pasteByDefault = true;
+    #   showInStatusBar = false;
+    #   showSearch = true;
+    #   showTitle = true;
+    #   showFooter = true;
+    #   pinTo = "top";
+    # };
   };
 }

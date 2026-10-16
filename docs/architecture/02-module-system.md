@@ -81,7 +81,7 @@ NixOS 和 Darwin 之间共享的跨平台模块：
 
 ### 第 3 层：Home Manager 模块 (`modules/home/`)
 
-跨平台用户空间配置（所有平台共享）。**硬性约定：`modules/home/` 只放跨平台软件**（macOS / Linux 都能用）；macOS 专有软件（如 aerospace、karabiner、输入法）必须放 `modules/darwin/`，NixOS 专有软件放 `modules/nixos/`：
+跨平台用户空间配置（所有平台共享）。**硬性约定：`modules/home/` 只放跨平台软件**（macOS / Linux 都能用）；macOS 专有软件（如 karabiner、输入法）必须放 `modules/darwin/`，NixOS 专有软件放 `modules/nixos/`：
 
 | 模块 | 内容 |
 |------|------|

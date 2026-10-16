@@ -18,19 +18,13 @@ in {
 
       programs = {
         inputmethods.squirrel = mkDefault enabled;
+        inputmethods.qingjian = mkDefault enabled;
         inputmethods.ime-switch = mkDefault enabled;
 
         graphical.apps = {
-          # AeroSpace：macOS 专属平铺窗口管理器（cask 安装 + config/home 软链接）
-          aerospace = mkDefault enabled;
-
           chrome = mkDefault enabled;
-          alt-tab = mkDefault enabled;
-          # keyclu = mkDefault enabled;
           maccy = mkDefault enabled;
           # snipaste = mkDefault enabled;
-          # raycast = mkDefault enabled;
-          # orion = mkDefault enabled;
           # stats = mkDefault enabled;
           aldente = mkDefault enabled;
           obsidian = mkDefault enabled;
@@ -41,8 +35,6 @@ in {
 
         terminal.emulators = {
           ghostty = mkDefault enabled;
-          wezterm = mkDefault enabled;
-          rio = mkDefault enabled;
         };
       };
     };

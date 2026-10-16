@@ -214,7 +214,7 @@ in
   homebrew = {
     taps = [ "anomalyco/tap" "homebrew/cask" "homebrew/core" ];
     brews = [ "codex" "mas" "opencode" ];
-    casks = [ "google-chrome" "raycast" "karabiner-elements" ... ];
+    casks = [ "google-chrome" "ghostty" "karabiner-elements" ... ];
   };
 }
 ```

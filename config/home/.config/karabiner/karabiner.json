@@ -4,6 +4,146 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Tap Fn/Globe to toggle Squirrel / ABC (hold Fn still works as modifier)",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    { "key_code": "fn", "lazy": true }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "^im\\.rime\\.inputmethod\\.Squirrel\\.Hans$"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "type": "input_source_unless",
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "^im\\.rime\\.inputmethod\\.Squirrel"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "parameters": {
+                                    "basic.to_if_alone_timeout_milliseconds": 250
+                                }
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    { "key_code": "fn", "lazy": true }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "^com\\.apple\\.keylayout\\.ABC$"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "type": "input_source_if",
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "^im\\.rime\\.inputmethod\\.Squirrel"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "parameters": {
+                                    "basic.to_if_alone_timeout_milliseconds": 250
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Ctrl+Space toggles Squirrel in Chrome/Codex (apps steal system IME shortcut)",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_if",
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$",
+                                            "^com\\.google\\.Chrome\\.canary$",
+                                            "^com\\.openai\\.codex$"
+                                        ]
+                                    },
+                                    {
+                                        "type": "input_source_unless",
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "^im\\.rime\\.inputmethod\\.Squirrel"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.ABC"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_if",
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$",
+                                            "^com\\.google\\.Chrome\\.canary$",
+                                            "^com\\.openai\\.codex$"
+                                        ]
+                                    },
+                                    {
+                                        "type": "input_source_if",
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "^im\\.rime\\.inputmethod\\.Squirrel"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "description": "Change left_command+neiu to arrow keys (Colemak physical positions)",
                         "manipulators": [
                             {

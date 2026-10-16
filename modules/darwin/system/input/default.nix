@@ -1,9 +1,10 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption optionals;
 
   cfg = config.dot.darwin.system.input;
+  qingjianEnabled = config.dot.darwin.programs.inputmethods.qingjian.enable;
 in {
   options.dot.darwin.system.input = {
     enable = mkEnableOption "macOS input settings";
@@ -22,7 +23,9 @@ in {
       defaults = {
         CustomUserPreferences = {
           "com.apple.HIToolbox" = {
-            AppleFnUsageType = 3;
+            # 0=无。系统 Globe/Fn 行为改由 Karabiner 单击切换输入法处理，
+            # 避免与听写抢键，也不依赖注销后才生效的 AppleFnUsageType。
+            AppleFnUsageType = 0;
             AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.ABC";
             AppleEnabledInputSources = [
               # {
@@ -36,10 +39,22 @@ in {
                 "KeyboardLayout ID" = 252;
                 "KeyboardLayout Name" = "ABC";
               }
+              # 鼠须管必须同时写 Keyboard Input Method 和 Input Mode。
+              # 只写 Input Mode 时，TIS 会在 activateSettings 后把整项丢掉。
+              {
+                "Bundle ID" = "im.rime.inputmethod.Squirrel";
+                InputSourceKind = "Keyboard Input Method";
+              }
               {
                 "Bundle ID" = "im.rime.inputmethod.Squirrel";
                 "Input Mode" = "im.rime.inputmethod.Squirrel.Hans";
                 InputSourceKind = "Input Mode";
+              }
+            ] ++ optionals qingjianEnabled [
+              # 青简是 Keyboard Input Method Without Modes，只写 Bundle，不要 Input Mode。
+              {
+                "Bundle ID" = "app.qingjian.inputmethod";
+                InputSourceKind = "Keyboard Input Method";
               }
             ];
             AppleSelectedInputSources = [{
